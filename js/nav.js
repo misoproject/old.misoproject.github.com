@@ -40,15 +40,25 @@ $(function() {
       done = false;
 
       //highlight the current section of the page you've scrolled to
-      _.each(anchors, function(a) {
-        if (a[3] === true) {
+      console.log(bottom, scroll);
+      anchors.sort(function(a, b) {
+        //take any that are after the 
+        //bottom of the page out of the running
+        if ( a[1] > bottom ) { return 1; }
+
+        if ( (a[1] - scroll) < (b[1] - scroll) ) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+      anchors[0][2].addClass('active');
+      anchors[0][3] = true;
+
+      _.each(anchors, function(a, i) {
+        if ( (i > 0) && (a[3] === true) ) {
           a[2].removeClass('active');
           a[3] = false;
-        }
-        if (!done && (a[1] >= scroll) ) {
-          done = true;
-          a[2].addClass('active');
-          a[3] = true;
         }
       });
 
