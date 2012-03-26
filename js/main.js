@@ -197,7 +197,10 @@
         }
       }
     })
+  
+    window.__def.resolve();
   }
-
+  window.__def = _.Deferred();
   codemirrorify(".codeblock");
+
 }());
