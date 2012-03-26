@@ -532,10 +532,7 @@
                   );
                   console.log(this.column("phone").data[0].toString());
                 }
-              });
-              
-              
-              </textarea></div>
+              });</textarea></div>
             </p>
           </p>
         </div>
@@ -734,7 +731,7 @@
               When a row is updated, there will be <code>changed</code> and <code>old</code> attributes.
             </li>
             <li>
-              In certain cases the values of <code>changed</code> and <code>old</code>may not be an object but rather a numeric value. More on that in the <b>Computing Column Stats</b> section.
+              In certain cases the values of <code>changed</code> and <code>old</code> may not be an object but rather a numeric value. More on that in the <b>Computed Values</b> section.
             </li>
           </ul>
           <h4>Detecting Delta Types:</h4>
@@ -1217,7 +1214,7 @@
                 columns.push(this.column(name));
               }, this);
             
-              return this.calculated(columns, function(columns) {
+              return this._calculated(columns, function(columns) {
                 
                 // return a function that when re-run over a set of
                 // columns can recompute the value we're looking for
@@ -1244,8 +1241,7 @@
               success : function() {
                 console.log(this.random(["one", "two"]));    
               }
-            });
-            </textarea></div>
+            });</textarea></div>
             <b>Note</b> that this form will also support an actual subscribable product if your dataset is syncable.
           </p>
         </div>
