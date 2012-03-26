@@ -19,6 +19,7 @@
       theme : "default",
       mode : "javascript",
       theme : "default",
+      buttons : "run,clear",
       indentUnit : 1,
       indentWithTabs : false,
       runnable : false
@@ -37,18 +38,39 @@
         hiddenScripts  = [],
         cleanupScripts = [];
 
+    // Seek out and cache all hidden scripts
+    $("script[type=codemirror]").each(function() {
+      hiddenScripts.push({
+        selector: $(this).data("selector"),
+        src: this.innerHTML
+      });
+    });
+
+    console.log(hiddenScripts);
+    // Seek out and cache all cleanup scripts
+    $("script[type=\"codemirror/cleanup\"]").each(function() {
+      cleanupScripts.push({
+        selector: $(this).data("selector"),
+        src: this.innerHTML
+      });
+    });
+    
     $.each(codeblocks, function(i, codeblock) {
       if (!$.data(codeblock, cmconfig.data.codemirrorified)) {
+        
         // initialize defaults.
         var codeblock = $(codeblock),
             editor    = null,
-            options   = $.extend(cmconfig.codemirror,
+            options   = $.extend({}, cmconfig.codemirror,
               {
-                mode : !!codeblock.attr('mode') ? codeblock.attr('mode') : cmconfig.codemirror.mode,
-                theme : !!codeblock.attr('theme') ? codeblock.attr('theme') : cmconfig.codemirror.theme,
+                mode    : !!codeblock.attr('mode') ? codeblock.attr('mode') : cmconfig.codemirror.mode,
+                theme   : !!codeblock.attr('theme') ? codeblock.attr('theme') : cmconfig.codemirror.theme,
+                buttons : !!codeblock.attr('buttons') ? codeblock.attr('buttons') : cmconfig.codemirror.buttons,
+                
                 onFocus : function(e) {
                   inEditor = true;
                 },
+                
                 onBlur : function(e) {
                   inEditor = false;
                 },
@@ -56,15 +78,31 @@
               }
             );
 
+        // are we showing the console?
+        if (options.readOnly) {
+          options.showConsole = false;
+        } else {
+          if (codeblock.attr("showConsole") !== "false") {
+            options.showConsole = true;
+          } else {
+            options.showConsole = false;
+          }
+        } 
+        
         // scan through the text and remove the min amount of spaces
         // so that the indentation is properly done.
         var lines = codeblock.text().split("\n");
         var indent = Infinity, regex = /^(\s+)(.*)/;
         $.each(lines, function(j, line) {
-          var space = regex.exec(line)[1];
+          
+          var space = regex.exec(line);
           if (space) {
+            space = space[1];
             indent = Math.min(indent, space.length);
+          } else {
+            indent = 0;
           }
+
         });
         // now that we found the smallest indent, reassemble the lines
         var newblock = "";
@@ -72,7 +110,6 @@
           newblock += line.slice(indent) + "\n";
         });
         codeblock.text(newblock);
-
 
         // if this is a textarea just use the codemirror shorthand.
         if (codeblock.get(0).nodeName.toUpperCase() === "TEXTAREA") {
@@ -97,103 +134,130 @@
           e.stopPropagation();
         });
 
-        if (cmconfig.codemirror.runnable || codeblock.attr("runnable") === "true") {
-          // make the code runnable
+        if (options.runnable || codeblock.attr("runnable") === "true") {
+          
+           // make the code runnable
           var wrapper = editor.getWrapperElement(),
-              button  = $('<div>', {
-                "class" : "button",
-                text : "Run"
-              }).prependTo(wrapper),
-              clearButton  = $('<div>', {
-                "class" : "button clear",
-                text : "Clear"
-              }).prependTo(wrapper),
-              output = $('<div>', {
-                "class" : cmconfig.classes.codemirrorresult
-              }).appendTo($(wrapper).parent());
+              buttons = {},
+              output = null;
 
-          clearButton.click(function(editor, output){
-            return function(event) {
-              output.html('');
-            };
-          }(editor, output));
+          if (options.showConsole) {
+            output = $('<div>', {
+              "class" : cmconfig.classes.codemirrorresult
+            }).appendTo($(wrapper).parent());
+          }
+          
+          // ======= add run button =======
+          if (options.buttons.indexOf("run") > -1) {
+            buttons.run  = $('<div>', {
+              "class" : "button",
+              text : "Run"
+            }).prependTo(wrapper)
+            .click(function(editor, output, options){
+              return function(event) {
+                
+                // save the default logging behavior.
+                // Following Dean Edward's fantastic sandbox code:
+                // http://dean.edwards.name/weblog/2006/11/sandbox/+evaluating+js+in+an+iframe
+                // create an iframe sandbox for this element.
+                var iframe = $("<iframe>")
+                  .css("display", "none")
+                  .appendTo($('body'));
 
-          button.click(function(editor, output){
-            return function(event) {
-
-              // save the default logging behavior.
-              var real_console_log = console.log;
-              
-              // save the default logging behavior.
-              // Following Dean Edward's fantastic sandbox code:
-              // http://dean.edwards.name/weblog/2006/11/sandbox/+evaluating+js+in+an+iframe
-              // create an iframe sandbox for this element.
-              var iframe = $("<iframe>")
-                .css("display", "none")
-                .appendTo($('body'));
-
-              // Overwrite the default log behavior to pipe to an output element.
-
-              // Overwrite the default log behavior to pipe to an output element.
-              console.log = function() {
-                var messages = [];
-                // Convert all arguments to Strings (Objects will be JSONified).
-                for (var i = 0; i < arguments.length; i++) {
-                  var value = arguments[i];
-                  messages.push(typeof(value) == 'object' ? JSON.stringify(value) : String(value));
+                // Overwrite the default log behavior to pipe to an output element.
+                
+                // save the default logging behavior.
+                if (options.showConsole) {
+                  var real_console_log = console.log;
+                  
+                  console.log = function() {
+                    var messages = [];
+                    // Convert all arguments to Strings (Objects will be JSONified).
+                    for (var i = 0; i < arguments.length; i++) {
+                      var value = arguments[i];
+                      messages.push(typeof(value) == 'object' ? JSON.stringify(value) : String(value));
+                    }
+                    var msg = messages.join(" ");
+                    if (output.html() !== "") {
+                      output.append("<br />" + msg);
+                    } else {
+                        output.html(msg);
+                    }
+                  };
                 }
-                var msg = messages.join(" ");
-                if (output.html() !== "") {
-                  output.append("<br />" + msg);
-                } else {
-                    output.html(msg);
+
+                var sandBoxMarkup = "<script>"+
+                  "var MSIE/*@cc_on =1@*/;"+ // sniff
+                  "console={ log: parent.console.log };" +
+                  "parent.sandbox=MSIE?this:{eval:function(s){return eval(s)}}<\/script>";
+                
+                // expose globals to iframe
+                $.each(cmconfig.globals, function(prop, val) {
+                  val = $.trim(val);
+                  iframe[0].contentWindow[val] = window[val];
+                });
+
+                // write a script into the <iframe> and create the sandbox
+                frames[frames.length - 1].document.write(sandBoxMarkup);
+
+                var combinedSource = "";
+
+                // Prepend all setup scripts
+                $.each(hiddenScripts, function() {
+                  if ($(codeblock).is(this.selector)) {
+                    combinedSource += this.src + "\n";
+                  }
+                });
+                
+                combinedSource += editor.getValue();
+                
+                // Append all cleanup scripts
+                $.each(cleanupScripts, function() {
+                  if ($(codeblock).is(this.selector)) {
+                    combinedSource = combinedSource + this.src + "\n";
+                  }
+                });
+
+                // eval in the sandbox.
+                sandbox.eval(combinedSource);
+
+                // get rid of the frame. New Frame for every context.
+                iframe.remove();
+                
+                if (options.showConsole) {
+                  // set the old logging behavior back.
+                  console.log = real_console_log;
+                }
+              }
+            }(editor, output, options));
+          }
+
+          // ======= add clear button =======
+          if (options.buttons.indexOf("clear") > -1) {
+            buttons.clear = $('<div>', {
+              "class" : "button clear",
+              text : "Clear",
+            }).prependTo(wrapper)
+            .click(function(editor, output){
+              return function(event) {
+                if (output !== null) {
+                  output.html('');
                 }
               };
+            }(editor, output));
+          }
 
-              var sandBoxMarkup = "<script>"+
-                "var MSIE/*@cc_on =1@*/;"+ // sniff
-                "console={ log: parent.console.log };" +
-                "parent.sandbox=MSIE?this:{eval:function(s){return eval(s)}}<\/script>";
+          // ======= add reset button =======
+          if (options.buttons.indexOf("reset") > -1) {
+            buttons.reset = $('<div>', {
+              "class" : "button reset",
+              text : "Reset"
+            }).prependTo(wrapper)
+            .click(function(e){
+              editor.setValue(codeblock.html());
+            });
 
-              
-              // expose globals to iframe
-              $.each(cmconfig.globals, function(prop, val) {
-                val = $.trim(val);
-                iframe[0].contentWindow[val] = window[val];
-              });
-            
-
-              // write a script into the <iframe> and create the sandbox
-              frames[frames.length - 1].document.write(sandBoxMarkup);
-
-              var combinedSource = "";
-
-              // Prepend all setup scripts
-              $.each(hiddenScripts, function() {
-                if ($(codeblock).is(this.selector)) {
-                  combinedSource += this.src + "\n";
-                }
-              });
-              
-              combinedSource += editor.getValue();
-              
-              // Append all cleanup scripts
-              $.each(cleanupScripts, function() {
-                if ($(codeblock).is(this.selector)) {
-                  combinedSource = combinedSource + this.src + "\n";
-                }
-              });
-
-              // eval in the sandbox.
-              sandbox.eval(combinedSource);
-
-              // get rid of the frame. New Frame for every context.
-              iframe.remove();
-              
-              // set the old logging behavior back.
-              console.log = real_console_log;
-            }
-          }(editor, output));
+          }
         }
       }
     })

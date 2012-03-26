@@ -114,7 +114,7 @@
           <h4>Importing from a local object array</h4>
           <p>
             If you have an array of json objects, you can easily convert them to a Dataset like so:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var myData = [
               { state : "Alabama", population : 4802740 },
               { state : "Massachusetts", population : 6587536 }
@@ -131,7 +131,7 @@
           <h4>Importing from a local "strict" format object</h4>
           <p>
             If you happen to have your data preprocessed in what we call a "strict" format, you can speed up your import slightly by initializing your Dataset with the <code>strict</code> flag:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var myData = {
               columns : [
                 { name : "state", data : ["Alabama", "Massachusetts"] },
@@ -151,7 +151,7 @@
           <h4>Importing from a local delimited string format</h4>
           <p>
             If for some reason you actually have all your data as a delimited string on the client side (which is an unlikely but possible,) you can import that into a dataset object too.
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var myData = "state,population\n"+
                    "Alabala,4802740\n" +
                    "Massachusetts,6587536";
@@ -183,7 +183,7 @@
           <h4>Google Spreadsheet Importing</h4>
           <p>
             If you have a <b>published</b> Google Spreadsheet that you would like to import data from, you can do so with the following format:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               importer: Miso.Importers.GoogleSpreadsheet,
               parser : Miso.Parsers.GoogleSpreadsheet,
@@ -220,7 +220,7 @@
               </li>
             </ul>
           </p>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // We will only make 5 requests in this example
           var requests = 5, 
               madeRequests = 0;
@@ -279,7 +279,7 @@
           </p>
           <h3>Pass success/error callbacks:</h3>
           <p>
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : 40 },
@@ -304,7 +304,7 @@
             If you have more than one dataset you need to wait on, or you might be a fan of using deferreds, you can use them as follows:
           </p>
           <p>
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds1 = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : 40 },
@@ -334,7 +334,7 @@
             Note that the individual ready callbacks are executed first and then the fetch callback gets executed.
           </p>
           <p>
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds1 = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : 40 },
@@ -393,7 +393,7 @@
           <pre>&#x000A;columns : [&#x000A;  { name : 'columnName', &#x000A;    type : '<known type (see Types Sections)>' &#x000A;    … [any additional type required options here.] &#x000A;  }&#x000A;]</pre>
           <p>
             Dataset will take care of the actual type coercion, making it trivial to convert strings to numbers or timestamps to `moment` objects. For example, coercing the timestamp column into a time column and the total column to a numeric type would look like so:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : "2012 04_20" },
@@ -424,7 +424,7 @@
             </p>
             <p>
               To define a new type, the required signature is as follows:
-              <div class="codeblock"><textarea class="code" id="code" runnable="false">
+              <div class="codeblock"><textarea class="code"  runnable="false" showConsole="false" >
               // all types live under the Miso.types namespace.
               // Beware of overriding existing types. 
               // Nothing is stopping you from doing that.
@@ -458,7 +458,7 @@
             </p>
             <p>
               For example, we might define a custom <code>phone</code> type like so:
-              <div class="codeblock"><textarea class="code" id="code" runnable="true">
+              <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
               // dummy phone number class
               var PhoneNumber = function(areacode, number) {
                 this.areacode = +areacode;
@@ -574,7 +574,7 @@
           </p>
           <h4>Iterating over rows:</h4>
           <p>
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40},
@@ -743,7 +743,7 @@
           </p>
           <p>
             For example:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : 40 },
@@ -795,7 +795,7 @@
           <p>
             To add a row to your dataset, use the <code>add</code> method.
             <pre>ds.add(rowObject, options);</pre>
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : [
                 { one : 12,  two : 40,  three : 40 }
@@ -882,7 +882,7 @@
         <div class='content'>
           <p>
             You can define a comparator as a property during the dataset initialization. This will sort the data during the initial parsing.
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -908,7 +908,7 @@
           </p>
           <p>
             You can sort your Dataset by specifying a comparator function at any later point and calling <code>.sort</code> like so:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -955,7 +955,7 @@
           </p>
           <pre>&#x000A;ds.columns(["one", "two"]);</pre>
           <b>Note</b> selecting a single column this way will create a new dataset-like interface. If you're trying to just get a reference to a specific column in your dataset, just call <code>ds.column("one");</code>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -976,7 +976,7 @@
             A more likely selection is a subset of rows that matches a particular criteria. You can select a row subset like so:
             <pre>ds.rows(filter);</pre>
           </p>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -1002,7 +1002,7 @@
           <h3>Syncing:</h3>
           <p>
             If you enabled syncing on your dataset by setting <code>{ sync : true }</code> during instantiation, your views will automatically update to reflect changes in your data. For example:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -1060,7 +1060,7 @@
             There are several default computations built in:
           </p>
           <h3>Max:</h3>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -1079,7 +1079,7 @@
           });</textarea></div>
           <p>
             <b>Note</b> that the <code>max</code> can be computed on numeric columns but also time columns!
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -1099,7 +1099,7 @@
             });</textarea></div>
           </p>
           <h3>Min:</h3>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -1117,7 +1117,7 @@
             console.log("min of all", ds.min());
           });</textarea></div>
           <h3>Sum:</h3>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -1138,7 +1138,7 @@
             <b>Note</b> you can't add up dates, so don't try that one.
           </p>
           <h3>Mean:</h3>
-          <div class="codeblock"><textarea class="code" id="code" runnable="true">
+          <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { columns : [ 
@@ -1166,7 +1166,7 @@
           </p>
           <p>
             For example:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -1196,7 +1196,7 @@
           </p>
           <p>
             For example, if we wanted to implement a product that returned a random value from the dataset, you could do it like so:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             // initialize a new dataset
             var ds = new Miso.Dataset({
               data: { columns : [ 
@@ -1310,7 +1310,7 @@
           </p>
           <p>
             By default the groupBy will sum up the values in the rows, but you can pass any method as an options argument like so:
-            <div class="codeblock"><textarea class="code" id="code" runnable="true">
+            <div class="codeblock"><textarea class="code"  runnable="true" showConsole="true" buttons="run,reset,clear">
             var ds = new Miso.Dataset({
               data : {
                 columns : [

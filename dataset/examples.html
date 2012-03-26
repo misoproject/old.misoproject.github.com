@@ -19,7 +19,27 @@
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
   </head>
   <body>
-    <h1>Examples</h1>
+    <article class='dataset'>
+      <section class='topper'>
+        <img alt="Dataset" class="logo" src="/images/dataset.png"/>
+      </section>
+      <section>
+        <h2>
+          <a href='#create' id='create'>
+            Base Example 1
+          </a>
+        </h2>
+        <div class='content'>
+          <div id='example1output'></div>
+          <div>
+            <script type='codemirror' data-selector='#example1'>var x = 10;
+            var el = $('#example1output');</script></div>
+            <div class="codeblock"><textarea class="code" id="example1" runnable="true" showConsole="false" buttons="run,reset">
+            el.html("bla bla bla");</textarea></div>
+          </div>
+        </div>
+      </section>
+    </article>
     <footer>
       <div class='container'>
         <section>

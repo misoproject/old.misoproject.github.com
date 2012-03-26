@@ -101,6 +101,9 @@ span.CodeMirror-selected {
   background-color: #eee; 
 }
 .CodeMirror .button.clear {
+  margin-right: 102px; 
+}
+.CodeMirror .button.reset {
   margin-right: 50px; 
 }
 .CodeMirror-scroll {
