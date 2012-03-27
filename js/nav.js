@@ -44,7 +44,7 @@ $(window).load(function() {
 
         // find anchor
         anchors = _.sortBy(anchors, function(a) {
-          return Math.abs(a[1] - scroll + height);
+          return Math.abs(a[1] - scroll + ( height / 2) );
         });
 
         // anchors = anchors.sort(function(a, b) {
