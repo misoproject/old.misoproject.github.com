@@ -24,7 +24,7 @@ $(window).load(function() {
       //given this is being called on scroll I'm caching
       //everything I can.
       var fixed = ($nav.css('position') === 'fixed'),
-          top = 408,
+          top = $('article section.normal:first').offset().top - $('article').offset().top,
           left = $nav.offset().left,
           height = $window.height(),
           nav_height= $nav.height();
