@@ -46,6 +46,7 @@ $(window).load(function() {
         anchors = _.sortBy(anchors, function(a) {
           return Math.abs(a[1] - scroll + ( height / 2) );
         });
+        //I made a demo comment here
 
         // anchors = anchors.sort(function(a, b) {
         //   //take any that are after the 
