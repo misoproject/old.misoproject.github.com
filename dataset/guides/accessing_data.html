@@ -14,7 +14,7 @@
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project :: Dataset :: Examples</title>
+    <title>The Miso Project :: Dataset :: Guides</title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -53,85 +53,81 @@
       </span>
     </nav>
     <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
-    <article class='dataset example'>
-      <section class='normal'>
-        <h2>Remote CSV and Highchart</h2>
+    <article class='dataset'>
+      <section class='guide'>
+        <h2>
+          Accessing Data
+          <h3>Columns</h3>
+          Each column in the dataset is of a <code>Miso.Column</code> type. We shall reference it as column for simplicity's sake.
+          <p>
+            A column has the following properties:
+            <ul>
+              <li><code>name</code></li>
+              <li><code>type</code></li>
+              <li><code>data</code> - the data array for this column.</li>
+              <li><code>_id</code> - a unique id assigned to this column at parse time.</li>
+            </ul>
+          </p>
+          <p>
+            While you can access the data inside dataset by directly accessing the <code>data</code> property on a column, it is NOT recommended as this will
+            not handle any event propagation. Use direct access sparingly. For more information on accessing rows, see the <b>Rows</b> section.
+          </p>
+        </h2>
+        <h4>Getting all column names:</h4>
+        <pre>ds.columnNames();</pre>
+        Note this will never include the <code>_id</code> column as it is internal to the dataset implementation and you shouldn't be messing with it.
+        <h4>Getting a column by name:</h4>
+        <pre>ds.column(columnName);</pre>
+        This returns the actual column object. Note that because the order of columns
+        is not guaranteed (or should matter,) the fetching of columns is always done by name.
+        <h4>Iterating over columns:</h4>
+        <pre>&#x000A;  ds.eachColumn(function(columnName, column, index) {&#x000A;    // do what you need here.&#x000A;  });</pre>
+        <h3>Rows</h3>
         <p>
-          This example pulls a local comma delimited dataset containing world crude oil production since
-          1980 to 2004 and graphs it as a line chart using <a href="http://www.highcharts.com/">Highcharts</a>.
+          Since dataset stores all the data column-wise, sometimes you may want to access a "row" object more easily than by iterating through columns. Note that the row object is not a direct reference to your actual data row (as in, if you modify it, it won't actually trigger a change in your dataset.) To change your dataset, you need to use the `update` method.
         </p>
+        <h4>Iterating over rows:</h4>
         <p>
-          This example demonstrates: Remote Importing, Delimited Datasets.
-        </p>
-        <div id='lineChartContainer' style='height: 300px; width: 100%;'>
-          <div style='padding-top: 30%; width:50%; margin: 0 auto; font-size: 1.5em'>
-            Click RUN below to see a results chart
-          </div>
-        </div>
-      </section>
-      <div class="codeblock"><textarea id="highstockandcsv" class="code" globals="Miso,_,$,Highcharts" runnable="true" sandbox="" buttons="run,reset,clear" autorun="true" callbacks-clear="" callbacks-reset="" callbacks-run="">
-      var ds = new Miso.Dataset({
-        url : "/data/crudeoil.csv",
-        delimiter : ",",
-        columns : [
-          { name : "Year", type : "time", format : "YYYY" }
-        ]
-      });
-      
-      ds.fetch({
-        success : function() {
-          chart = new Highcharts.Chart({
-            chart: {
-              renderTo: 'lineChartContainer',
-              type: 'line',
-              marginRight: 130,
-              marginBottom: 25
-            },
-            title: {
-              text: 'World Crude Oil Barrel Production (1,000) per unit',
-              x: -20 //center
-            },
-            subtitle: {
-              text: 'Src: http://www.infochimps.com/datasets/world-crude-oil-production-1980-to-2004',
-              x: -20
-            },
-            xAxis: {
-              categories: _.map(this.column("Year").data, function(year) { 
-                return year.format("YY"); 
-              })
-            },
-            yAxis: {
-              title: {
-                text: this.columnNames()[2]
-              },
-              plotLines: [{
-                value: 0,
-                width: 10000,
-                color: '#808080'
-              }]
-            },
-            tooltip: {
-              formatter: function() {
-                return '<b>'+ this.series.name +'</b><br/>'+
-                this.x +': '+ this.y;
-              }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'World Production',
-                data: this.column("Crude oil production (1000 barrels per day)").data
-            }]
+          <div class="codeblock"><textarea  class="code"  runnable="true" sandbox="" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          var ds = new Miso.Dataset({
+            data : [
+              { one : 12,  two : 40},
+              { one : 1,   two : 40},
+              { one : 102, two : 430}
+            ]
           });
-        }
-      });
-      </textarea></div>
+          ds.fetch({ success : function() {
+            this.each(function(row) {
+              log(JSON.stringify(row));
+            });
+          }});</textarea></div>
+        </p>
+        <p>
+          Note that each row has a unique identifier assiged to it called `_id` in a separate column. Do not attempt to change that value unless you're feeling destructive. That identifier is used for caching purposes and changing it may make your data inaccessible through the API.
+        </p>
+        <h4>Row by Position:</h4>
+        <p>
+          if you're trying to get the Nth row, you can do so as follows:
+          <pre>ds.rowByPosition(5);</pre>
+          Note, this will return a row object that will <b>not</b> be a direct reference to your data. This will be a copy.
+        </p>
+        <h4>Row by id:</h4>
+        <p>
+          If you're trying to get a row with a specific id, you can do so as follows:
+          <pre>ds.rowById(423);</pre>
+          Note, this will return a row object that will <b>not</b> be a direct reference to your data. This will be a copy.
+        </p>
+        <a href='/dataset/guides/data_types' style='float:left;'>
+          <h2>
+            &laquo; Data Types
+          </h2>
+        </a>
+        <a href='/dataset/guides/events' style='float:right;'>
+          <h2>
+            Events &raquo;
+          </h2>
+        </a>
+      </section>
     </article>
     <footer>
       <div class='container'>
@@ -169,7 +165,7 @@
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>
     <script src='/js/codeblocks.js'></script>
-    <script src='/js/highchart/highcharts.js' type='text/javascript'></script>
+    
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-30531498-1']);

@@ -14,7 +14,7 @@
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project :: Dataset :: Examples</title>
+    <title>The Miso Project :: Dataset :: Guides</title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -53,85 +53,105 @@
       </span>
     </nav>
     <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
-    <article class='dataset example'>
-      <section class='normal'>
-        <h2>Remote CSV and Highchart</h2>
+    <article class='dataset'>
+      <section class='guide'>
+        <h2>
+          Modifying Data
+        </h2>
         <p>
-          This example pulls a local comma delimited dataset containing world crude oil production since
-          1980 to 2004 and graphs it as a line chart using <a href="http://www.highcharts.com/">Highcharts</a>.
+          All data modifications should happen through the following <code>add</code>, <code>remove</code> and <code>update</code> methods.
+        </p>
+        <h3>Adding a row:</h3>
+        <p>
+          To add a row to your dataset, use the <code>add</code> method.
+          <pre>ds.add(rowObject, options);</pre>
+          <div class="codeblock"><textarea  class="code"  runnable="true" sandbox="" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          var ds = new Miso.Dataset({
+            data : [
+              { one : 12,  two : 40,  three : 40 }
+            ]
+          }).fetch({
+            success : function() {
+              log("Row Count Before Add", this.length);
+              
+              this.add({
+                one : 100,
+                two : 100,
+                three : 100
+              });
+          
+              log("Row Count After Add", this.length);
+            }
+          });</textarea></div>
         </p>
         <p>
-          This example demonstrates: Remote Importing, Delimited Datasets.
+          Adding a row will trigger the following events in this order:
+          <ul>
+            <li><code>add</code></li>
+            <li><code>change</code></li>
+          </ul>
+          Pass <code>{ silent : true }</code> as the optional <code>options</code> parametere to suppress events.
         </p>
-        <div id='lineChartContainer' style='height: 300px; width: 100%;'>
-          <div style='padding-top: 30%; width:50%; margin: 0 auto; font-size: 1.5em'>
-            Click RUN below to see a results chart
-          </div>
-        </div>
+        <h3>Removing a Row:</h3>
+        <p>
+          To remove a row from your dataset, use the <code>remove</code> method. There are two ways to remove rows:
+          <ul>
+            <li>
+              <b>By providing a row id:</b>
+              <pre>ds.remove(rowId, options);</pre>
+              <i>Note the row id is the unique <code>_id</code> identifier each row has.</i>
+            </li>
+            <li>
+              <b>By providing a filter function:</b>
+              <pre>ds.remove(rowFilterFunction, options);</pre>
+              For example:
+              <pre>&#x000A;// remove all rows where the population is > 1000&#x000A;ds.remove(function(row) {&#x000A;  return (row.population > 1000);&#x000A;});</pre>
+              All rows that pass the filter function will be removed.
+            </li>
+          </ul>
+        </p>
+        <p>
+          Either remove call will trigger the following events in this order:
+          <ul>
+            <li>
+              <code>remove</code>
+            </li>
+            <li>
+              <code>change</code>
+            </li>
+          </ul>
+          Pass <code>{ silent : true }</code> as the optional <code>options</code> parametere to suppress events.
+        </p>
+        <h3>Updating Rows:</h3>
+        <p>
+          To update a row, pass the <code>)id</code> of the row along with the changed attributes like so:
+          <pre>ds.update(rowId, changedAttributes, options);</pre>
+          For example:
+          <pre>&#x000A;ds.update(rowId, {&#x000A;  col1 : newVal, col2 : newVal ...&#x000A;});</pre>
+        </p>
+        <p>
+          A call to <code>update</code> will trigger the following events in this order:
+          <ul>
+            <li>
+              <code>update</code>
+            </li>
+            <li>
+              <code>change</code>
+            </li>
+          </ul>
+          Pass <code>{ silent : true }</code> as the optional <code>options</code> parametere to suppress events.
+        </p>
+        <a href='/dataset/guides/events' style='float:left;'>
+          <h2>
+            &laquo; Events
+          </h2>
+        </a>
+        <a href='/dataset/guides/selection' style='float:right;'>
+          <h2>
+            Selecting Data &raquo;
+          </h2>
+        </a>
       </section>
-      <div class="codeblock"><textarea id="highstockandcsv" class="code" globals="Miso,_,$,Highcharts" runnable="true" sandbox="" buttons="run,reset,clear" autorun="true" callbacks-clear="" callbacks-reset="" callbacks-run="">
-      var ds = new Miso.Dataset({
-        url : "/data/crudeoil.csv",
-        delimiter : ",",
-        columns : [
-          { name : "Year", type : "time", format : "YYYY" }
-        ]
-      });
-      
-      ds.fetch({
-        success : function() {
-          chart = new Highcharts.Chart({
-            chart: {
-              renderTo: 'lineChartContainer',
-              type: 'line',
-              marginRight: 130,
-              marginBottom: 25
-            },
-            title: {
-              text: 'World Crude Oil Barrel Production (1,000) per unit',
-              x: -20 //center
-            },
-            subtitle: {
-              text: 'Src: http://www.infochimps.com/datasets/world-crude-oil-production-1980-to-2004',
-              x: -20
-            },
-            xAxis: {
-              categories: _.map(this.column("Year").data, function(year) { 
-                return year.format("YY"); 
-              })
-            },
-            yAxis: {
-              title: {
-                text: this.columnNames()[2]
-              },
-              plotLines: [{
-                value: 0,
-                width: 10000,
-                color: '#808080'
-              }]
-            },
-            tooltip: {
-              formatter: function() {
-                return '<b>'+ this.series.name +'</b><br/>'+
-                this.x +': '+ this.y;
-              }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: -10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'World Production',
-                data: this.column("Crude oil production (1000 barrels per day)").data
-            }]
-          });
-        }
-      });
-      </textarea></div>
     </article>
     <footer>
       <div class='container'>
@@ -169,7 +189,7 @@
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>
     <script src='/js/codeblocks.js'></script>
-    <script src='/js/highchart/highcharts.js' type='text/javascript'></script>
+    
     <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-30531498-1']);
