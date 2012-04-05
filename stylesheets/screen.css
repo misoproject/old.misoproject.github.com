@@ -237,7 +237,7 @@ article div.codeblock pre, div.container div.codeblock pre {
 }
 /* line 94, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article code, div.container code {
-  font-family: 'Monaco';
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
   background-color: #fff;
   padding-left: 0.3em;
   padding-right: 0.3em;
@@ -247,7 +247,7 @@ article code, div.container code {
 }
 /* line 98, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article pre, div.container pre {
-  font-family: 'Monaco';
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
   background-color: #fff;
   padding-left: 0.3em;
   padding-right: 0.3em;
@@ -340,7 +340,7 @@ article section.api ul.params li div.name, div.container section.api ul.params l
 }
 /* line 171, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.api ul.params li span, div.container section.api ul.params li span {
-  font-family: 'Monaco';
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
   background-color: #fff;
   padding-left: 0.3em;
   padding-right: 0.3em;
