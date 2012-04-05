@@ -59,7 +59,7 @@
           Creating a Dataset
         </h2>
         <p>
-          To begin working with your dataset, you first need to import your data. You can import either <b>local</b> data (in the form of a variable that happens to contain your data) or <b>remote</b> data (in the form of a url that we'll fetch from.)
+          To begin working with your dataset, you first need to import your data. You can import either <b>local</b> data (in the form of a variable that happens to contain your data) or <b>remote</b> data (in the form of a url that you can fetch from.)
         </p>
         <h3>Local Importing</h3>
         <p>
@@ -91,7 +91,7 @@
             data : myData
           });
           
-          ds.fetch({ success: function() {
+          ds.fetch({ success : function() {
             log("Column Names: ", ds.columnNames());
           }});</textarea></div>
         </p>
@@ -108,10 +108,10 @@
           
           var ds = new Miso.Dataset({
             data : myData,
-            strict: true
+            strict : true
           });
           
-          ds.fetch({ success: function() {
+          ds.fetch({ success : function() {
             log("Column Names: ", ds.columnNames());
           }});</textarea></div>
         </p>
@@ -152,14 +152,14 @@
           If you have a <b>published</b> Google Spreadsheet that you would like to import data from, you can do so with the following format:
           <div class="codeblock"><textarea  class="code"  runnable="true" sandbox="" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           var ds = new Miso.Dataset({
-            importer: Miso.Importers.GoogleSpreadsheet,
+            importer : Miso.Importers.GoogleSpreadsheet,
             parser : Miso.Parsers.GoogleSpreadsheet,
             key : "0Asnl0xYK7V16dFpFVmZUUy1taXdFbUJGdGtVdFBXbFE",
-            worksheet: "1"
+            worksheet : "1"
           });
           
           ds.fetch({ 
-            success: function() {
+            success : function() {
               log(ds.columnNames());
             },
             error : function() {
