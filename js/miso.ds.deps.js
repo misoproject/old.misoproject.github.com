@@ -3151,6 +3151,7 @@
 
           } else {
             throw("incorrect value '" + row[column.name] + 
+                  "' on '"  + column.name +
                   "' of type " + Miso.typeOf(row[column.name], column) +
                   " passed to column with type " + column.type);  
           
@@ -5136,6 +5137,9 @@ Version 0.0.1.2
             // Now that we have our value string, let's add
             // it to the data array.
             if (columnCountComputed) {
+              if (strMatchedValue === '') {
+                strMatchedValue = null;
+              }
 
               columnData[columns[columnIndex]].push(strMatchedValue);
             
