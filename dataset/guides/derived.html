@@ -154,6 +154,54 @@
             log(gb.column("anothercount").data);
           });</textarea></div>
         </p>
+        <h3>CountBy</h3>
+        <p>
+          A countBy operation involves counting the number of occurances of each unique value in a specified column. Those values
+          are then set as another column called "count."
+        </p>
+        <p>
+          For example, when counting the following dataset by the "state" column:
+          <table>
+            <tr>
+              <th>state</th>
+              <th>value</th>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>130000</td>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>420</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>2900</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>4</td>
+            </tr>
+          </table>
+        </p>
+        <p>
+          The result of the call:
+          <pre>ds.countBy("state");</pre>
+          <table>
+            <tr>
+              <th>state</th>
+              <th>count</th>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>2</td>
+            </tr>
+          </table>
+        </p>
         <h3>Moving Average</h3>
         <p>
           A moving average of size N is a new sequence that is computed by taking the mean (or any other method) of the subsequences of N terms. For example, taking the moving average with a window size of 3 of the following dataset:
