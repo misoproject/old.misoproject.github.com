@@ -61,7 +61,7 @@
           the commit history from github and displaying it as a simple bar graph using the jQuery sparkline library.
         </p>
         <p>
-          This example demonstrates: Remote Importing, Group by with a custom method and column before callbacks.
+          This example demonstrates: Remote Importing, countBy and column 'before' coersion callbacks.
         </p>
         <div id='barChartContainer' style='height: 100px; width: 50%;'>
           Fetching github data...
@@ -127,14 +127,7 @@
       
       ds.fetch({ success : function() {
       
-        var commitsByDay = this.groupBy("date", ["sha"], { 
-          // we want the result of this group by to actually just be the number of
-          // commits that match each date. We could accomplish this also with a countBy
-          // but we wanted to demonstrate the power of the method property.
-          method : function(array) {
-            return array.length;
-          }
-        });
+        var commitsByDay = this.countBy("date");
       
         // even though we're aggregating by week, we might actually not have 
         // counts for certain weeks! We're trying to build a consistent time series of 
@@ -153,7 +146,7 @@
           if (rowForDate.length === 0) {
             commitsByDay.add({
               date : firstDate,
-              sha  : "0"
+              count  : 0
             });
           }
       
@@ -170,7 +163,7 @@
         }});
       
         $('#barChartContainer').children().remove();
-        $('#barChartContainer').sparkline(commitsByDay.column('sha').data, {
+        $('#barChartContainer').sparkline(commitsByDay.column('count').data, {
           type : 'line',
           height: '100px',
           width: $('#barChartContainer').width()
