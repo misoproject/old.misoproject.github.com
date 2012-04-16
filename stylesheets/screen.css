@@ -292,7 +292,7 @@ article section div.example, article section div.tutorial, div.container section
   float: left;
   margin-right: 24px;
   margin-bottom: 24px;
-  min-height: 140px;
+  min-height: 510px;
 }
 /* line 134, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section div.example img, article section div.tutorial img, div.container section div.example img, div.container section div.tutorial img {
