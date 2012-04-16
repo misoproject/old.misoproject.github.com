@@ -154,11 +154,11 @@ body {
 }
 
 /* line 6, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article.miso section a, article.miso div.text a, article.miso section span.color {
+article.miso a, article.miso div.text a, article.miso section span.color {
   color: #d35e1d;
 }
 /* line 8, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article.miso section a:hover, article.miso div.text a:hover, article.miso section span.color:hover {
+article.miso a:hover, article.miso div.text a:hover, article.miso section span.color:hover {
   color: #d35e1d;
 }
 /* line 12, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
@@ -177,11 +177,11 @@ article.miso a.button:hover {
 }
 
 /* line 6, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article.dataset section a, article.dataset div.text a, article.dataset section span.color {
+article.dataset a, article.dataset div.text a, article.dataset section span.color {
   color: #2585ec;
 }
 /* line 8, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article.dataset section a:hover, article.dataset div.text a:hover, article.dataset section span.color:hover {
+article.dataset a:hover, article.dataset div.text a:hover, article.dataset section span.color:hover {
   color: #2585ec;
 }
 /* line 12, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
@@ -199,13 +199,34 @@ article.dataset a.button:hover {
   background-color: #2585ec !important;
 }
 
-/* line 61, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 60, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   font-family: "facitweb", "Helvetica Neue", "Helvetica", san-serif;
 }
 
-/* line 65, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 64, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+div.codeblock {
+  cursor: text;
+}
+/* line 66, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+div.codeblock div.helptext {
+  font-size: 8px;
+  color: #999;
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
+  margin-bottom: 10px;
+}
+/* line 72, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+div.codeblock .CodeMirror {
+  margin-bottom: 3px;
+}
+
+/* line 77, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+div.codeblock:hover .CodeMirror {
+  box-shadow: 0 0 15px #B1DEFA;
+}
+
+/* line 82, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article, div.container {
   font-family: "ff-tisa-web-pro","Georgia", serif;
   overflow: hidden;
@@ -216,181 +237,114 @@ article, div.container {
   position: relative;
   width: 61.5em;
 }
-/* line 76, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 93, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article.example p, div.container.example p {
   width: 30em;
 }
-/* line 79, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 96, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article.example div.codeblock, div.container.example div.codeblock {
   margin-top: 24px;
   width: 61.5em;
 }
-/* line 85, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 103, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article div.codeblock, div.container div.codeblock {
   float: left;
   width: 34.5em;
 }
-/* line 86, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 104, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article div.codeblock pre, div.container div.codeblock pre {
   box-shadow: none;
   padding: none;
 }
-/* line 94, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 112, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article code, div.container code {
   font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
   background-color: #fff;
   padding-left: 0.3em;
   padding-right: 0.3em;
-  padding-bottom: 0.2em;
-  padding-top: 0.2em;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.1em;
+  padding-top: 0.1em;
 }
-/* line 98, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 116, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article pre, div.container pre {
   font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
   background-color: #fff;
   padding-left: 0.3em;
   padding-right: 0.3em;
-  padding-bottom: 0.2em;
-  padding-top: 0.2em;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding-bottom: 0.1em;
+  padding-top: 0.1em;
   margin-top: 0.5em;
   margin-bottom: 1em;
 }
-/* line 104, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 122, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section, div.container section {
   clear: both;
 }
-/* line 106, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 124, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section p, div.container section p {
   margin-bottom: 1em;
   color: black;
 }
-/* line 110, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section div.example, article section div.guide, div.container section div.example, div.container section div.guide {
+/* line 128, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section div.example, article section div.tutorial, div.container section div.example, div.container section div.tutorial {
   width: 16.5em;
   padding: 10px;
   float: left;
   margin-right: 24px;
   margin-bottom: 24px;
-  min-height: 120px;
+  min-height: 130px;
 }
-/* line 116, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section div.example img, article section div.guide img, div.container section div.example img, div.container section div.guide img {
+/* line 134, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section div.example img, article section div.tutorial img, div.container section div.example img, div.container section div.tutorial img {
   margin-bottom: 24px;
 }
-/* line 121, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section div.guide:hover, div.container section div.guide:hover {
+/* line 139, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section div.tutorial:hover, div.container section div.tutorial:hover {
   background-color: white;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-/* line 126, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.examples a, article section.guides a, div.container section.examples a, div.container section.guides a {
+/* line 144, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.examples a, article section.tutorials a, div.container section.examples a, div.container section.tutorials a {
   color: #000;
 }
-/* line 128, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.examples a img, article section.guides a img, div.container section.examples a img, div.container section.guides a img {
+/* line 146, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.examples a img, article section.tutorials a img, div.container section.examples a img, div.container section.tutorials a img {
   border: 1px solid #ddd;
 }
-/* line 132, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.examples h1, article section.guides h1, div.container section.examples h1, div.container section.guides h1 {
+/* line 150, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.examples h1, article section.tutorials h1, div.container section.examples h1, div.container section.tutorials h1 {
   margin-bottom: 30px;
 }
-/* line 136, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.guide, div.container section.guide {
+/* line 154, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial, div.container section.tutorial {
   width: 43.5em;
 }
-/* line 138, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.guide .codeblock, div.container section.guide .codeblock {
+/* line 156, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial .codeblock, div.container section.tutorial .codeblock {
   width: 43.5em;
   margin-bottom: 30px;
 }
-/* line 145, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api h2, div.container section.api h2 {
-  margin-top: 2em;
-  margin-bottom: 0.5em;
+/* line 160, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial ul, div.container section.tutorial ul {
+  margin-left: 20px;
 }
-/* line 149, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api div.codeblock, div.container section.api div.codeblock {
-  margin-top: 24px;
-  width: 61.5em;
+/* line 163, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial ul li, div.container section.tutorial ul li {
+  margin-bottom: 10px;
 }
-/* line 153, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api div.codemirror-result, div.container section.api div.codemirror-result {
-  display: none;
+/* line 167, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial h3, div.container section.tutorial h3 {
+  margin-top: 40px;
 }
-/* line 157, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul, div.container section.api ul {
-  list-style: none;
+/* line 170, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial h4, div.container section.tutorial h4 {
+  margin-top: 20px;
 }
-/* line 159, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul li, div.container section.api ul li {
-  padding-top: 10px;
-  border-top: 1px solid #cccccc;
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: 20px;
+/* line 173, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article section.tutorial div.indent-1, div.container section.tutorial div.indent-1 {
+  margin-left: 30px;
 }
-/* line 166, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li, div.container section.api ul.params li {
-  border-top: 1px solid #dfdfdf;
-}
-/* line 168, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li div.name, div.container section.api ul.params li div.name {
-  display: block;
-  height: 100%;
-  float: left;
-  width: 7.5em;
-}
-/* line 174, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li span, div.container section.api ul.params li span {
-  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
-  background-color: #fff;
-  padding-left: 0.3em;
-  padding-right: 0.3em;
-  padding-bottom: 0.2em;
-  padding-top: 0.2em;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-/* line 177, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li p, div.container section.api ul.params li p {
-  float: left;
-  width: 25.5em;
-}
-/* line 181, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li ul, div.container section.api ul.params li ul {
-  width: 100%;
-  padding-left: 20px;
-  margin-bottom: 20px;
-}
-/* line 185, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li ul li, div.container section.api ul.params li ul li {
-  border-top: 1px solid #eee;
-}
-/* line 187, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api ul.params li ul li div.name, div.container section.api ul.params li ul li div.name {
-  margin-left: 10px;
-}
-/* line 194, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api h3, div.container section.api h3 {
-  margin-bottom: 4px;
-  margin-top: 16px;
-}
-/* line 198, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api div.signature, div.container section.api div.signature {
-  height: 100%;
-  display: block;
-  margin-left: 5px;
-  float: left;
-  width: 25.5em;
-}
-/* line 205, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
-article section.api div.doc, div.container section.api div.doc {
-  float: right;
-  margin-left: 5px;
-  width: 34.5em;
-}
-/* line 213, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 180, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.intro, div.container section.intro {
   padding-bottom: 24px;
   overflow: hidden;
@@ -400,28 +354,28 @@ article section.intro, div.container section.intro {
   width: 61.5em;
   position: relative;
 }
-/* line 219, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 186, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.intro div.download, div.container section.intro div.download {
   position: absolute;
   right: 0;
   width: 34.5em;
 }
-/* line 224, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 191, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.intro img, div.container section.intro img {
   margin-bottom: 20px;
 }
-/* line 227, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 194, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.intro p, div.container section.intro p {
   font-size: 1.25em;
   line-height: 1.25em;
 }
-/* line 236, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 201, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section div.left, div.container section div.left {
   float: left;
   width: 25.5em;
   margin-right: 24px;
 }
-/* line 242, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 207, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section.quickstart, div.container section.quickstart {
   padding-right: 10px;
   width: 100%;
@@ -429,25 +383,25 @@ article section.quickstart, div.container section.quickstart {
   padding-top: 10px;
 }
 
-/* line 251, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 216, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download {
   bottom: 40px;
   font-weight: bold;
   font-family: "facitweb", "Helvetica Neue", "Helvetica", san-serif;
   font-size: 14px;
 }
-/* line 255, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 220, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download h2 {
   font-size: 16px;
   padding-bottom: 10px;
 }
-/* line 259, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 224, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download span {
   display: block;
   padding-top: 6px;
   padding-bottom: 6px;
 }
-/* line 264, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 229, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download a.button {
   display: block;
   padding: 6px;
@@ -458,16 +412,176 @@ div.download a.button {
   margin-right: 6px;
   float: left;
 }
-/* line 273, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 238, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download a.button:last-of-type {
   margin-right: 0;
 }
-/* line 277, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 242, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 div.download a.button:hover {
   color: white;
 }
 
+/* line 248, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.api_wrapper {
+  float: right;
+  width: 48em;
+  margin-left: 24px;
+}
+/* line 253, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section {
+  width: 48em;
+  float: right;
+  clear: none;
+}
+/* line 257, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section h3.instance {
+  margin-top: 50px;
+}
+/* line 260, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul {
+  list-style-type: none;
+}
+/* line 264, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.codeblock {
+  margin-top: 24px;
+  width: 48em;
+  margin-bottom: 24px;
+}
+/* line 268, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.codeblock div.CodeMirror-scroll {
+  padding-top: 0;
+}
+/* line 274, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.bar {
+  overflow: hidden;
+  width: 100%;
+  padding: 5px;
+  font-weight: bold;
+  font-family: "facitweb", "Helvetica Neue", "Helvetica", san-serif;
+  color: #fff;
+  background-color: #333;
+}
 /* line 281, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.bar h3 {
+  float: left;
+  font-size: 16px;
+}
+/* line 286, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.bar span.returns {
+  float: right;
+  color: #ddd;
+}
+/* line 289, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section div.bar span.returns span.object {
+  padding-left: 10px;
+  font-style: italic;
+}
+/* line 296, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters {
+  list-style: none;
+}
+/* line 298, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li {
+  margin-bottom: 48px;
+}
+/* line 300, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li div.head {
+  width: 100%;
+  overflow: hidden;
+}
+/* line 304, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li ul {
+  list-style: none;
+}
+/* line 306, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li ul li {
+  padding-left: 40px;
+  margin-bottom: 2px;
+}
+/* line 312, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li span {
+  display: block;
+  float: left;
+}
+/* line 315, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li span.name {
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
+  background-color: #fff;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  padding-bottom: 0.1em;
+  padding-top: 0.1em;
+}
+/* line 318, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li span.type {
+  float: right;
+  margin-left: 10px;
+  font-family: 'Monaco', 'DejaVu Sans Mono', monospace;
+  background-color: #fff;
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+  padding-bottom: 0.1em;
+  padding-top: 0.1em;
+}
+/* line 323, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li span.optional {
+  line-height: 1.1;
+  float: right;
+  font-style: italic;
+  color: #666;
+}
+/* line 329, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li span.required {
+  line-height: 1.05;
+  float: right;
+  font-weight: bold;
+}
+/* line 335, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api section ul.parameters li p {
+  width: 100%;
+}
+/* line 342, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav {
+  width: 12em;
+  float: right;
+  font-weight: bold;
+  font-family: "facitweb", "Helvetica Neue", "Helvetica", san-serif;
+  background-color: #fff;
+  min-height: 500px;
+}
+/* line 348, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  list-style: none;
+  margin-bottom: 0.5em;
+}
+/* line 354, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul.object {
+  padding-left: 0;
+}
+/* line 357, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul span.instance {
+  padding-left: 10px;
+}
+/* line 360, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul li {
+  padding-bottom: 0;
+  margin-bottom: 0.2em;
+}
+/* line 364, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul ul {
+  padding-top: 0;
+  padding-right: 0;
+}
+/* line 367, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+article.api div.nav ul ul li {
+  padding-left: 10px;
+  font-weight: normal;
+}
+
+/* line 377, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 nav {
   padding-top: 15px;
   width: 61.5em;
@@ -478,7 +592,7 @@ nav {
   font-family: "facitweb", "Helvetica Neue", "Helvetica", san-serif;
   height: 70px;
 }
-/* line 290, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 386, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 nav span {
   margin-right: 30px;
   float: left;
@@ -486,38 +600,38 @@ nav span {
   padding-top: 0.2em;
   padding-bottom: 0.2em;
 }
-/* line 296, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 392, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 nav span.miso {
   padding-right: 15px;
   margin-right: 15px;
   border-right: 1px solid #cccccc;
 }
-/* line 301, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 397, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 nav span a {
   color: #000;
 }
-/* line 303, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 399, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 nav span a:hover {
   color: #2585EC;
 }
 
-/* line 310, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 406, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 footer {
   background-color: #000;
   color: #f7f7f7;
 }
-/* line 313, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 409, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 footer h2 {
   border-bottom: 1px solid #666;
   font-size: 16px;
   padding-bottom: 5px;
   margin-bottom: 15px;
 }
-/* line 319, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 415, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 footer div.container {
   padding-top: 30px;
 }
-/* line 321, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
+/* line 417, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 footer div.container section {
   padding-bottom: 30px;
 }

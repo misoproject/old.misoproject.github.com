@@ -14,7 +14,7 @@
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project</title>
+    <title></title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -23,28 +23,110 @@
     <nav>
       <span class='miso'>
         <a href='/'>
-          Miso
+          &larr; Miso Home
         </a>
       </span>
       <span>
         <a href='/dataset'>
-          Dataset
+          Basics
+        </a>
+      </span>
+      <span>
+        <a href='/dataset/examples.html'>
+          Examples
+        </a>
+      </span>
+      <span>
+        <a href='/dataset/tutorials.html'>
+          Tutorials
+        </a>
+      </span>
+      <span>
+        <a href='/dataset/api.html'>
+          API Doc
+        </a>
+      </span>
+      <span>
+        <a href='http://www.github.com/misoproject/dataset'>
+          Code (Github)
         </a>
       </span>
     </nav>
-    <article class='miso'>
-      <section class='intro'>
-        <div class='left'>
-          <img src='/images/logo.png' />
+    <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
+    <article class='api'>
+      <div class='nav'>
+        <ul>
+          <li>
+            <a>
+              Miso.Dataset
+            </a>
+          </li>
+          <ul>
+            <li class='constructor'>
+              Constructor
+            </li>
+            <li>
+              <a>
+                Instance Methods
+                <ul>
+                  <li>
+                    fetch
+                  </li>
+                  <li>
+                    apply
+                  </li>
+                  <li>
+                    addColumn
+                  </li>
+                </ul>
+              </a>
+            </li>
+          </ul>
+        </ul>
+      </div>
+      <section class='api'>
+        <h2>
+          Miso.Dataset
+        </h2>
+        <p>
+          Est chillwave retro, elit stumptown irure nulla velit consectetur mustache trust fund. Gentrify thundercats cillum chillwave. Post-ironic odd future bespoke esse synth, sustainable terry richardson semiotics food truck photo booth gentrify. Butcher keffiyeh craft beer ethnic nihil beard.
+        </p>
+        <div class='entry'>
+          <div class='bar'>
+            <h3>
+              new Miso.Dataset( options )
+            </h3>
+            <span class='returns'>
+              Returns:
+              <span class='object'>
+                Miso.Dataset
+              </span>
+            </span>
+          </div>
           <p>
-            Miso is an open source toolkit designed to expedite the creation of high-quality interactive storytelling and data visualisation content.
+            Est chillwave retro, elit stumptown irure nulla velit consectetur mustache trust fund. Gentrify thundercats cillum chillwave. Post-ironic odd future bespoke esse synth, sustainable terry richardson semiotics food truck photo booth gentrify. Butcher keffiyeh craft beer ethnic nihil beard.
           </p>
-          <p>
-            Miso is a set of libraries to be released over the coming months that simplify the processes of managing data, building reusable components, and authoring narratives. Miso is in active development, and will have components released as they are completed. Follow along:
-            <a href='http://www.twitter.com/themisoproject'>@TheMisoProject</a>
-            &amp;
-            <a href='http://www.github.com/misoproject'>Github</a>
-          </p>
+          <h2>
+            Parameters:
+          </h2>
+          <ul class='parameters'>
+            <li>
+              <div class='head'>
+                <span class='name'>
+                  options
+                </span>
+                <span class='optional'>
+                  optional
+                </span>
+                <span class='type'>
+                  Object
+                </span>
+              </div>
+              <p>
+                Object containing a set of instantiation properties
+              </p>
+            </li>
+          </ul>
         </div>
       </section>
     </article>
@@ -79,6 +161,7 @@
       </div>
     </footer>
     <script src='/js/jquery.min.js'></script>
+    <script src='/js/nav.js'></script>
     <script src='/js/miso.ds.deps.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>

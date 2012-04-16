@@ -14,7 +14,7 @@
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project :: Dataset :: Examples</title>
+    <title>The Miso Project :: Dataset :: Tutorals</title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -54,56 +54,81 @@
     </nav>
     <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
     <article class='dataset'>
-      <section class='examples'>
-        <h1>
-          Examples
-        </h1>
-        <div class='example'>
-          <a href='/dataset/examples/highstockandcsv.html'>
-            <img src='/images/examples/highchart.gif' />
-            <h2>Remote CSV Dataset with Highcharts</h2>
-            <p>
-              Whatever photo booth commodo carles minim, swag ut banksy before they sold out officia marfa quinoa cardigan magna.
-            </p>
-          </a>
-        </div>
-        <div class='example'>
-          <a href='/dataset/examples/rickshawandtwitter.html'>
-            <img src='/images/examples/rickshawandtwitter.gif' />
-            <h2>Remote Polling Twitter & Rendering With Rickshaw</h2>
-            <p>
-              Remotely polls twitter and plots a stacked bar chart (using Rickshaw) that shows the use of punctuation in tweets for a particular query.
-            </p>
-            <p>
-              This example demonstrates: Polling, Group By, Binding.
-            </p>
-          </a>
-        </div>
-        <div class='example'>
-          <a href='/dataset/examples/github.html'>
-            <img src='/images/examples/github.gif' />
-            <h2>jQuery Sparklines with Github API</h2>
-            <p>
-              Remotely fetches commit history for the Dataset project, builds a timeseries
-              with a week long interval and renders a basic linechart.
-            </p>
-            <p>
-              This example demonstrates: Remote Importing, countBy and column 'before' coersion callbacks.
-            </p>
-          </a>
-        </div>
-        <div class='example'>
-          <a href='/dataset/examples/perlinnoise.html'>
-            <img src='/images/examples/perlinnoise.gif' />
-            <h2>Perlin Noise Generation and DOM based rendering</h2>
-            <p>
-              Creates a matrix of perlin noise values and renders them progressively using DOM elements only.
-            </p>
-            <p>
-              This example demonstrates: Creating a Dataset from scratch.
-            </p>
-          </a>
-        </div>
+      <section class='tutorial'>
+        <h2>
+          Accessing Data
+          <h3>Columns</h3>
+          Each column in the dataset is of a <code>Miso.Column</code> type. We shall reference it as column for simplicity's sake.
+          <p>
+            A column has the following properties:
+            <ul>
+              <li><code>name</code></li>
+              <li><code>type</code></li>
+              <li><code>data</code> - the data array for this column.</li>
+              <li><code>_id</code> - a unique id assigned to this column at parse time.</li>
+            </ul>
+          </p>
+          <p>
+            While you can access the data inside dataset by directly accessing the <code>data</code> property on a column, it is NOT recommended as this will
+            not handle any event propagation. Use direct access sparingly. For more information on accessing rows, see the <b>Rows</b> section.
+          </p>
+        </h2>
+        <h4>Getting all column names:</h4>
+        <pre>ds.columnNames();</pre>
+        Note this will never include the <code>_id</code> column as it is internal to the dataset implementation and you shouldn't be messing with it.
+        <h4>Getting a column by name:</h4>
+        <pre>ds.column(columnName);</pre>
+        This returns the actual column object. Note that because the order of columns
+        is not guaranteed (or should matter,) the fetching of columns is always done by name.
+        <h4>Iterating over columns:</h4>
+        <pre>&#x000A;  ds.eachColumn(function(columnName, column, index) {&#x000A;    // do what you need here.&#x000A;  });</pre>
+        <h3>Rows</h3>
+        <p>
+          Since dataset stores all the data column-wise, sometimes you may want to access a "row" object more easily than by iterating through columns. Note that the row object is not a direct reference to your actual data row (as in, if you modify it, it won't actually trigger a change in your dataset.) To change your dataset, you need to use the `update` method.
+        </p>
+        <h4>Iterating over rows:</h4>
+        <p>
+          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          var ds = new Miso.Dataset({
+            data : [
+              { one : 12,  two : 40},
+              { one : 1,   two : 40},
+              { one : 102, two : 430}
+            ]
+          });
+          ds.fetch({ 
+            success : function() {
+              this.each(function(row) {
+                log(JSON.stringify(row));
+              });
+            }
+          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+        </p>
+        <p>
+          Note that each row has a unique identifier assiged to it called `_id` in a separate column. Do not attempt to change that value unless you're feeling destructive. That identifier is used for caching purposes and changing it may make your data inaccessible through the API.
+        </p>
+        <h4>Row by Position:</h4>
+        <p>
+          if you're trying to get the Nth row, you can do so as follows:
+          <pre>ds.rowByPosition(5);</pre>
+          Note, this will return a row object that will <b>not</b> be a direct reference to your data. This will be a copy.
+        </p>
+        <h4>Row by id:</h4>
+        <p>
+          If you're trying to get a row with a specific id, you can do so as follows:
+          <pre>ds.rowById(423);</pre>
+          Note, this will return a row object that will <b>not</b> be a direct reference to your data. This will be a copy.
+        </p>
+        <a href='/dataset/tutorials/data_types' style='float:left;'>
+          <h2>
+            &laquo; Data Types
+          </h2>
+        </a>
+        <a href='/dataset/tutorials/events' style='float:right;'>
+          <h2>
+            Events &raquo;
+          </h2>
+        </a>
       </section>
     </article>
     <footer>

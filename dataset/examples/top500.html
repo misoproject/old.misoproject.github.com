@@ -37,8 +37,8 @@
         </a>
       </span>
       <span>
-        <a href='/dataset/guides.html'>
-          Guides
+        <a href='/dataset/tutorials.html'>
+          Tutorials
         </a>
       </span>
       <span>
@@ -59,7 +59,7 @@
         <div id='output' style='height: 300px; width: 300px;'>
           <p></p>
         </div>
-        <div class="codeblock"><textarea  class="code"  runnable="true" sandbox="" buttons="run,reset,clear" autorun="true" callbacks-clear="" callbacks-reset="" callbacks-run="">
+        <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="true" callbacks-clear="" callbacks-reset="" callbacks-run="">
         var ds = new Miso.Dataset({
           url : "/data/top500.csv",
           delimiter : ","
@@ -67,20 +67,45 @@
         
         ds.fetch({
           success: function() {
-            console.log(ds.rowByPosition(0), 'xx');
+        
+            var counts = ds.countBy('Country').sort({ comparator: function(r1, r2) {
+              if ( r1.counts > r2.counts ) {return 1;}
+              if ( r1.counts < r2.counts ) {return -1;}
+              return 0;
+            }});
+        
+            var topCoreCount = ds.groupBy('Country', ["Effeciency (%)", ]);
+        
             $el.append([
-              'The most powerful supercomputer in the world belongs to',
+              'The most powerful supercomputer in the world belongs to ',
+              num( ds.rowByPosition(0).Country ),
+              ' and the second most powerful to ',
+              num( ds.rowByPosition(1).Country ),
+              '. The', num ( counts.rowByPosition(0).Country ),
+              'has the most supercomputers in the top500 with ',
+              num( counts.rowByPosition(0).count ), ', the highest rated being',
+              function() {
+                var top = ds.rowById(counts.rowByPosition(0)._oids[0]);
+                return [top.Name, 'at', top.Site, ' , built in ', top.Year,
+                        'by', top.Manufacturer].join(' ')
+              }(),
+        
+        
+              'The supercomputers in the top500 have an average of',
+              num( ds.mean('Total Cores').toFixed() ),
+              'cores running at', num( ds.mean('Processor Speed (MHz)').toFixed() ),
+              'Mhz'
             ].join(' '));
           }
         });
         
         function num( val ) {
-          return "<span class='number'>" + val + "</span>";
+          return "<span style='color: #00f; font-weight: bold;'>" + val + "</span>";
         }
         var $el = $('#output p');
         
         console.log('x');
-        </textarea></div>
+        </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
       </section>
     </article>
     <footer>
@@ -94,7 +119,7 @@
               <img alt="Guardian" src="/images/guardian.png"/>
             </a>
             <a href='http://www.bocoup.com'>
-              <img alt="Bob" src="/images/bob.png"/>
+              <img alt="Bocoup horizontal 614" src="/images/bocoup-horizontal-614.gif"/>
             </a>
           </div>
         </section>
@@ -114,6 +139,7 @@
       </div>
     </footer>
     <script src='/js/jquery.min.js'></script>
+    <script src='/js/nav.js'></script>
     <script src='/js/miso.ds.deps.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>

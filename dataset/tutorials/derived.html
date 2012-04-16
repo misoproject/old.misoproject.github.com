@@ -14,7 +14,7 @@
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project :: Dataset :: Guides</title>
+    <title>The Miso Project :: Dataset :: Tutorials</title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -37,8 +37,8 @@
         </a>
       </span>
       <span>
-        <a href='/dataset/guides.html'>
-          Guides
+        <a href='/dataset/tutorials.html'>
+          Tutorials
         </a>
       </span>
       <span>
@@ -54,7 +54,7 @@
     </nav>
     <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
     <article class='dataset'>
-      <section class='guide'>
+      <section class='tutorial'>
         <h2>
           Derived Dataset
         </h2>
@@ -115,7 +115,7 @@
         </p>
         <p>
           By default the groupBy will sum up the values in the rows, but you can pass any method as an options argument like so:
-          <div class="codeblock"><textarea  class="code"  runnable="true" sandbox="" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           var ds = new Miso.Dataset({
             data : {
               columns : [
@@ -152,7 +152,55 @@
             log(gb.column("state").data);
             log(gb.column("count").data);
             log(gb.column("anothercount").data);
-          });</textarea></div>
+          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+        </p>
+        <h3>CountBy</h3>
+        <p>
+          A countBy operation involves counting the number of occurances of each unique value in a specified column. Those values
+          are then set as another column called "count."
+        </p>
+        <p>
+          For example, when counting the following dataset by the "state" column:
+          <table>
+            <tr>
+              <th>state</th>
+              <th>value</th>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>130000</td>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>420</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>2900</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>4</td>
+            </tr>
+          </table>
+        </p>
+        <p>
+          The result of the call:
+          <pre>ds.countBy("state");</pre>
+          <table>
+            <tr>
+              <th>state</th>
+              <th>count</th>
+            </tr>
+            <tr>
+              <td>MA</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>AZ</td>
+              <td>2</td>
+            </tr>
+          </table>
         </p>
         <h3>Moving Average</h3>
         <p>
@@ -234,7 +282,7 @@
         <p>
           Because of the inherent nature of a derived dataset, even the smallest change in your original data can cause many changes in your derived dataset. At the moment, those changes are not encompased in a set of deltas. Instead, the derived dataset gets recomputed. This is an expensive operation, but it reduces the code complexity substantially. We are open to discussing a better way of handling this situation, but for now, this works.
         </p>
-        <a href='/dataset/guides/products' style='float:left;'>
+        <a href='/dataset/tutorials/products' style='float:left;'>
           <h2>
             &laquo; Computed Values
           </h2>
@@ -252,7 +300,7 @@
               <img alt="Guardian" src="/images/guardian.png"/>
             </a>
             <a href='http://www.bocoup.com'>
-              <img alt="Bob" src="/images/bob.png"/>
+              <img alt="Bocoup horizontal 614" src="/images/bocoup-horizontal-614.gif"/>
             </a>
           </div>
         </section>
@@ -272,6 +320,7 @@
       </div>
     </footer>
     <script src='/js/jquery.min.js'></script>
+    <script src='/js/nav.js'></script>
     <script src='/js/miso.ds.deps.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>
