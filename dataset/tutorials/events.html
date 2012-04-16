@@ -55,15 +55,46 @@
     <a href="http://github.com/misoproject/dataset"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/7afbc8b248c68eb468279e8c17986ad46549fb71/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub"></a>
     <article class='dataset'>
       <section class='tutorial'>
-        <h1>
-          Events
-        </h1>
+        <h2>
+          Syncronization & Events
+        </h2>
         <p>
           Dataset has a very rich event system that allows you to bind to a variety of events on your dataset. By default, this functionality is <b>NOT ENABLED</b>. This is because event bindings are created automatically in certain cases (see more about selection and filtering) and unless that functionality is needed, there's no reason to create the bindings.
         </p>
         <p>
           To enable evented behavior, set the <code>sync</code> property to <code>true</code> when initializing your dataset.
           <pre>&#x000A;var ds = new Miso.Dataset({&#x000A;  data : [&#x000A;    { one : 12,  two : 40,  three : 40 }&#x000A;  ],&#x000A;  sync : true&#x000A;});</pre>
+        </p>
+        <h3>What are the effects of sync:true?</h3>
+        <p>
+          By setting sync to true, you are enabling syncronization of data between your original Dataset and anything derived from it such as:
+          <ul>
+            <li>
+              <a href='/dataset/tutorials/accessing_data.html'>
+                DataViews
+              </a>
+              <br />
+              Any selection created using rows, columns or where will get updated according to the original
+              changes in dataset. Any changes created to the DataView will trigger the appropriate events.
+            </li>
+            <li>
+              <a href='/dataset/tutorials/products.html'>
+                Products
+              </a>
+              <br />
+              Any changes to the original data will cause products to recompute their value. Products of a Dataset
+              that has sync set to true, are actual objects (vs just computed values.) To get their values
+              you need to call <code>.val()</code>.
+            </li>
+            <li>
+              <a href='/dataset/tutorials/derived.html'>
+                Derived Datasets
+              </a>
+              <br />
+              Any derived dataset will be recomputed when changes occur in the dataset. This is the least efficient of
+              the event-driven changes, because the entire derived dataset gets recomputed.
+            </li>
+          </ul>
         </p>
         <h3>Default Events</h3>
         <p>

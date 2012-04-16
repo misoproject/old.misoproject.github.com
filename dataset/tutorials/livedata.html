@@ -114,6 +114,13 @@
             log(madeRequests, ds.length);
           }
         });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+        <h3>Syncronization</h3>
+        <p>
+          If you have <code>sync</code> set to <code>true</code> when initializing your dataset, then
+          fetch calls that append data in either the default manner or unique manner will trigger the "add"
+          event. The resetOnFetch will trigger the "reset" event before triggering the "add" event.
+          In all cases, the "add" event will be triggered once for all rows that were added.
+        </p>
       </section>
     </article>
     <footer>

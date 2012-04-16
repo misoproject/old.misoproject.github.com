@@ -59,40 +59,149 @@
           Computed Values
         </h2>
         <p>
-          A pretty common requirement is to actually compute some basic statistics about your data.Most of the time those calculations happen on all the values in a specific column or a collection of columns, which is part of why we arrange our data in a column-wise manner. We call a computation that results in a single value a <code>Miso.Product</code>.
+          A pretty common requirement is to actually compute some basic statistics about your data.
+          Most of the time those calculations happen on all the values in a specific column or a
+          collection of columns, which is part of why we arrange our data in a column-wise manner.
+          Depending on how your original dataset was set up, you might get two different types of values:
         </p>
         <p>
-          There are several default computations built in:
+          <ul>
+            <li>
+              If you set <code>sync:true</code> on your original dataset, you will get a <code>Miso.Product</code>
+              for any of the following calls. The Miso.Product maintains a binding to the original Dataset and will
+              know to recompute itself when changes occur to the underlying data. This does mean that
+              you need to retrieve the value directly from this Miso.Product object by calling <code>.val()</code>.
+              For example:
+              <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              // initialize a new dataset
+              var ds = new Miso.Dataset({
+                data: { 
+                  columns : [ 
+                    { name : "one", data : [10, 2, 3] },
+                    { name : "two", data : [1, 20, 3] }
+                  ] 
+                },
+                sync : true,
+                strict: true
+              });
+              
+              _.when(ds.fetch()).then(function() {  
+              
+                var max = ds.max();
+                log("Max of all",  max.val());
+                max.bind("change", function(event) {
+                  log("New Value", max.val());
+                });
+              
+                ds.add({
+                  one : 100, two : 100
+                });
+              });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+            </li>
+            <li>
+              If you did not set the sync flag, you will just return a value (most likely a number) for any of the
+              following calls.
+            </li>
+          </ul>
         </p>
-        <h3>Max</h3>
-        <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-        // initialize a new dataset
-        var ds = new Miso.Dataset({
-          data: { 
-            columns : [ 
-              { name : "one",   data : [10, 2, 3, 14, 3, 4] },
-              { name : "two",   data : [40,  5, 6, 1,  1, 1] },
-              { name : "three", data : [400,  5, 6, 1,  1, 1] }
-            ] 
-          },
-          strict: true
-        });
-        
-        _.when(ds.fetch()).then(function() {  
-          log("Max of one", ds.max("one"));
-          log("Max of two", ds.max("two"));
-          log("Max of one & two", ds.max(["one", "two"]));
-          log("Max of all", ds.max());
-        });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        <p>
-          <b>Note</b> that the <code>max</code> can be computed on numeric columns but also time columns!
+        <div class='indent-1'>
+          <h3>
+            Built-in Computations:
+          </h3>
+          <h3>Max</h3>
+          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          // initialize a new dataset
+          var ds = new Miso.Dataset({
+            data: { 
+              columns : [ 
+                { name : "one",   data : [10, 2, 3, 14, 3, 4] },
+                { name : "two",   data : [40,  5, 6, 1,  1, 1] },
+                { name : "three", data : [400,  5, 6, 1,  1, 1] }
+              ] 
+            },
+            strict: true
+          });
+          
+          _.when(ds.fetch()).then(function() {  
+            log("Max of one", ds.max("one"));
+            log("Max of two", ds.max("two"));
+            log("Max of one & two", ds.max(["one", "two"]));
+            log("Max of all", ds.max());
+          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+          <p>
+            <b>Note</b> that the <code>max</code> can be computed on numeric columns but also time columns!
+            <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+            // initialize a new dataset
+            var ds = new Miso.Dataset({
+              data: { 
+                columns : [ 
+                  { name : "one",   data : [10, 2, 3] },
+                  { name : "date",  data : ["2011 01 01", "2012 03 05", "2001 02 01"] }
+                ] 
+              },
+            
+              columns : [
+                { name : "date", type : "time", format : "YYYY MM DD" }
+              ],
+              strict: true
+            });
+            
+            _.when(ds.fetch()).then(function() {  
+              log("Max of one",  ds.max("one"));
+              log("Max of date", ds.max("date").format("DD/MM/YYYY"));
+            });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+          </p>
+          <h3>Min</h3>
+          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          // initialize a new dataset
+          var ds = new Miso.Dataset({
+            data: { 
+              columns : [ 
+                { name : "one",   data : [10, 2, 3, 14, 3, 4] },
+                { name : "two",   data : [40,  5, 6, 1,  1, 1] },
+                { name : "three", data : [400,  5, 6, 1,  -1, 1] }
+              ] 
+            },
+            strict: true
+          });
+          
+          _.when(ds.fetch()).then(function() {  
+            log("min of one", ds.min("one"));
+            log("min of two", ds.min("two"));
+            log("min of one & two", ds.min(["one", "two"]));
+            log("min of all", ds.min());
+          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+          <h3>Sum</h3>
+          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          // initialize a new dataset
+          var ds = new Miso.Dataset({
+            data: { 
+              columns : [ 
+                { name : "one",   data : [10, 2, 3, 14, 3, 4] },
+                { name : "two",   data : [40,  5, 6, 1,  1, 1] },
+                { name : "three", data : [400,  5, 6, 1,  -1, 1] }
+              ] 
+            },
+            strict: true
+          });
+          
+          _.when(ds.fetch()).then(function() {  
+            log("sum of one", ds.sum("one"));
+            log("sum of two", ds.sum("two"));
+            log("sum of one & two", ds.sum(["one", "two"]));
+            log("sum of all", ds.sum());
+          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+          <p>
+            <b>Note</b> you can't add up dates, so don't try that one.
+          </p>
+          <h3>Mean</h3>
           <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           // initialize a new dataset
           var ds = new Miso.Dataset({
             data: { 
               columns : [ 
                 { name : "one",   data : [10, 2, 3] },
-                { name : "date",  data : ["2011 01 01", "2012 03 05", "2001 02 01"] }
+                { name : "date",  data : ["2011 01 01", "2012 03 05", "2001 02 01"]}
               ] 
             },
           
@@ -103,110 +212,10 @@
           });
           
           _.when(ds.fetch()).then(function() {  
-            log("Max of one",  ds.max("one"));
-            log("Max of date", ds.max("date").format("DD/MM/YYYY"));
+            log("mean of one",  ds.mean("one"));
+            log("mean of date", ds.mean("date").format("DD/MM/YYYY"));
           });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        </p>
-        <h3>Min</h3>
-        <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-        // initialize a new dataset
-        var ds = new Miso.Dataset({
-          data: { 
-            columns : [ 
-              { name : "one",   data : [10, 2, 3, 14, 3, 4] },
-              { name : "two",   data : [40,  5, 6, 1,  1, 1] },
-              { name : "three", data : [400,  5, 6, 1,  -1, 1] }
-            ] 
-          },
-          strict: true
-        });
-        
-        _.when(ds.fetch()).then(function() {  
-          log("min of one", ds.min("one"));
-          log("min of two", ds.min("two"));
-          log("min of one & two", ds.min(["one", "two"]));
-          log("min of all", ds.min());
-        });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        <h3>Sum</h3>
-        <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-        // initialize a new dataset
-        var ds = new Miso.Dataset({
-          data: { 
-            columns : [ 
-              { name : "one",   data : [10, 2, 3, 14, 3, 4] },
-              { name : "two",   data : [40,  5, 6, 1,  1, 1] },
-              { name : "three", data : [400,  5, 6, 1,  -1, 1] }
-            ] 
-          },
-          strict: true
-        });
-        
-        _.when(ds.fetch()).then(function() {  
-          log("sum of one", ds.sum("one"));
-          log("sum of two", ds.sum("two"));
-          log("sum of one & two", ds.sum(["one", "two"]));
-          log("sum of all", ds.sum());
-        });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        <p>
-          <b>Note</b> you can't add up dates, so don't try that one.
-        </p>
-        <h3>Mean</h3>
-        <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-        // initialize a new dataset
-        var ds = new Miso.Dataset({
-          data: { 
-            columns : [ 
-              { name : "one",   data : [10, 2, 3] },
-              { name : "date",  data : ["2011 01 01", "2012 03 05", "2001 02 01"]}
-            ] 
-          },
-        
-          columns : [
-            { name : "date", type : "time", format : "YYYY MM DD" }
-          ],
-          strict: true
-        });
-        
-        _.when(ds.fetch()).then(function() {  
-          log("mean of one",  ds.mean("one"));
-          log("mean of date", ds.mean("date").format("DD/MM/YYYY"));
-        });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        <h3>Syncing</h3>
-        <p>
-          If you have enabled syncing on your dataset by setting <code>{ sync : true }</code> during your dataset initialization, you can also subscribe to changes in your computed product.
-        </p>
-        <p>
-          A big change to note here is that if you plan to subscribe to a specific computation, it is no longer a simple result (like a number or a date.) It now becomse a <code>Miso.Product</code> object that you can retrieve the value from like so:
-          <pre>ds.max(["one", "two"]).val();</pre>
-        </p>
-        <p>
-          For example:
-          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-          // initialize a new dataset
-          var ds = new Miso.Dataset({
-            data: { 
-              columns : [ 
-                { name : "one", data : [10, 2, 3] },
-                { name : "two", data : [1, 20, 3] }
-              ] 
-            },
-            sync : true,
-            strict: true
-          });
-          
-          _.when(ds.fetch()).then(function() {  
-          
-            var max = ds.max();
-            log("Max of all",  max.val());
-            max.bind("change", function(event) {
-              log("New Value", max.val());
-            });
-          
-            ds.add({
-              one : 100, two : 100
-            });
-          });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-        </p>
+        </div>
         <h3>Adding your own</h3>
         <p>
           If you want to add your own computations to your dataset, take a look at <code>src/products.js</code> for some examples (like <code>max</code> and <code>min</code>.)
