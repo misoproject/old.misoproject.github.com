@@ -1151,7 +1151,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Boolean
+                  
                 </span>
               </span>
             </div>
@@ -1192,6 +1192,75 @@
                 </div>
                 <p>
                   A function with the following signature: <code>function(columnName, columnObject, index)</code>'
+                </p>
+              </li>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    context
+                  </span>
+                  <span class='type'>
+                    Object
+                  </span>
+                  <span class='optional'>
+                    optional
+                  </span>
+                </div>
+                <p>
+                  The context to be bound to the iterator.
+                </p>
+              </li>
+            </ul>
+          </div>
+          <div class='entry' id='misodataview_i_each'>
+            <div class='bar'>
+              <h3>
+                ds.each( iterator, context )
+              </h3>
+              <span class='returns'>
+                Returns:
+                <span class='object'>
+                  
+                </span>
+              </span>
+            </div>
+            <p>
+              Iterate over all rows. Each row is not a direct reference to the data
+              and thus should not be altered in any way.
+              <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              var ds = new Miso.Dataset({
+                data : [
+                  { one : 12,  two : 40},
+                  { one : 1,   two : 40},
+                  { one : 102, two : 430}
+                ]
+              });
+              ds.fetch({ 
+                success : function() {
+                  this.each(function(row) {
+                    log(JSON.stringify(row));
+                  });
+                }
+              });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+            </p>
+            <h3>
+              Parameters
+            </h3>
+            <ul class='parameters'>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    iterator
+                  </span>
+                  <span class='type'>
+                    Function
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  A function with the following signature: <code>function(row, rowIndex)</code>'
                 </p>
               </li>
               <li>
@@ -3729,6 +3798,11 @@
               <li>
                 <a href='#misodataview_i_eachcolumn'>
                   eachColumn
+                </a>
+              </li>
+              <li>
+                <a href='#misodataview_i_each'>
+                  each
                 </a>
               </li>
               <li>
