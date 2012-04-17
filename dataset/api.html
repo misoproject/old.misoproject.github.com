@@ -5,9 +5,12 @@
   <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
   <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
   <head>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <script src='http://use.typekit.com/aow5drr.js' type='text/javascript'></script>
     <script type='text/javascript'>
-      try{ Typekit.load(); } catch(e) { console.log('xxxx',e); }
+      try{ Typekit.load(); } catch(e) {}
     </script>
     <meta charset='utf-8' />
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
@@ -28,7 +31,7 @@
       </span>
       <span>
         <a href='/dataset'>
-          Basics
+          Home
         </a>
       </span>
       <span>
@@ -3713,403 +3716,405 @@
           </div>
         </section>
       </div>
-      <div class='nav'>
-        <ul>
-          <li>
-            <a href='#misodataset'>
-              Miso.Dataset
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misodataset_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-            <span class='instance'>
-              Instance Methods
-            </span>
-            <ul>
-              <li>
-                <a href='#misodataset_i_fetch'>
-                  fetch
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_apply'>
-                  apply
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_addcolumn'>
-                  addColumn
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_add'>
-                  add
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_remove'>
-                  remove
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_update'>
-                  update
-                </a>
-              </li>
-              <li>
-                <a href='#misodataset_i_reset'>
-                  reset
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misodataview'>
-              Miso.Dataview
-            </a>
-            <span class='instance'>
-              Instance Methods
-            </span>
-            <ul>
-              <li>
-                <a href='#misodataview_i_columnnames'>
-                  columnNames
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_column'>
-                  column
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_columns'>
-                  columns
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_hascolumn'>
-                  hasColumn
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_eachcolumn'>
-                  eachColumn
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_each'>
-                  each
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_rowbyposition'>
-                  rowByPosition
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_rowbyid'>
-                  rowById
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_rows'>
-                  rows
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_sort'>
-                  sort
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_where'>
-                  where
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_groupby'>
-                  groupBy
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_countby'>
-                  countBy
-                </a>
-              </li>
-              <li>
-                <a href='#misodataview_i_movingaverage'>
-                  movingAverage
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misoimporters'>
-              Miso.Importers
-            </a>
-          </li>
-          <li>
-            <a href='#misoimporters'>
-              Miso.Importers
-            </a>
-          </li>
-          <li>
-            <a href='#misoimporterlocal'>
-              Miso.Importer.Local
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misoimporterlocal_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misoimporterremote'>
-              Miso.Importer.Remote
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misoimporterremote_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misoimporterpolling'>
-              Miso.Importer.Polling
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misoimporterpolling_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misoimportergoog'>
-              Miso.Importer.Goog..
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misoimportergoog_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misoparsers'>
-              Miso.Parsers
-            </a>
-          </li>
-          <li>
-            <a href='#misocolumn'>
-              Miso.Column
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misocolumn_constructor'>
-                  constructor
-                </a>
-              </li>
-            </ul>
-            <span class='instance'>
-              Instance Methods
-            </span>
-            <ul>
-              <li>
-                <a href='#misocolumn_i_numericat'>
-                  numericAt
-                </a>
-              </li>
-              <li>
-                <a href='#misocolumn_i_coerce'>
-                  coerce
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypes'>
-              Miso.types
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypes_typeof'>
-                  typeof
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypesmixed'>
-              Miso.types.mixed
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypesmixed_name'>
-                  name
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesmixed_coerce'>
-                  coerce
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesmixed_test'>
-                  test
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesmixed_compare'>
-                  compare
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesmixed_numeric'>
-                  numeric
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypesstring'>
-              Miso.types.string
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypesstring_name'>
-                  name
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesstring_coerce'>
-                  coerce
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesstring_test'>
-                  test
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesstring_compare'>
-                  compare
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesstring_numeric'>
-                  numeric
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypesnumber'>
-              Miso.types.number
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypesnumber_name'>
-                  name
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesnumber_coerce'>
-                  coerce
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesnumber_test'>
-                  test
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesnumber_compare'>
-                  compare
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesnumber_numeric'>
-                  numeric
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypesboolean'>
-              Miso.types.boolean
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypesboolean_name'>
-                  name
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesboolean_coerce'>
-                  coerce
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesboolean_test'>
-                  test
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesboolean_compare'>
-                  compare
-                </a>
-              </li>
-              <li>
-                <a href='#misotypesboolean_numeric'>
-                  numeric
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a href='#misotypestime'>
-              Miso.types.time
-            </a>
-            <ul class='object'>
-              <li>
-                <a href='#misotypestime_name'>
-                  name
-                </a>
-              </li>
-              <li>
-                <a href='#misotypestime_coerce'>
-                  coerce
-                </a>
-              </li>
-              <li>
-                <a href='#misotypestime_test'>
-                  test
-                </a>
-              </li>
-              <li>
-                <a href='#misotypestime_compare'>
-                  compare
-                </a>
-              </li>
-              <li>
-                <a href='#misotypestime_numeric'>
-                  numeric
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class='nav_wrapper'>
+        <div class='nav'>
+          <ul>
+            <li>
+              <a href='#misodataset'>
+                Miso.Dataset
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misodataset_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+              <span class='instance'>
+                Instance Methods
+              </span>
+              <ul>
+                <li>
+                  <a href='#misodataset_i_fetch'>
+                    fetch
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_apply'>
+                    apply
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_addcolumn'>
+                    addColumn
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_add'>
+                    add
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_remove'>
+                    remove
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_update'>
+                    update
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataset_i_reset'>
+                    reset
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misodataview'>
+                Miso.Dataview
+              </a>
+              <span class='instance'>
+                Instance Methods
+              </span>
+              <ul>
+                <li>
+                  <a href='#misodataview_i_columnnames'>
+                    columnNames
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_column'>
+                    column
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_columns'>
+                    columns
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_hascolumn'>
+                    hasColumn
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_eachcolumn'>
+                    eachColumn
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_each'>
+                    each
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_rowbyposition'>
+                    rowByPosition
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_rowbyid'>
+                    rowById
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_rows'>
+                    rows
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_sort'>
+                    sort
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_where'>
+                    where
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_groupby'>
+                    groupBy
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_countby'>
+                    countBy
+                  </a>
+                </li>
+                <li>
+                  <a href='#misodataview_i_movingaverage'>
+                    movingAverage
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misoimporters'>
+                Miso.Importers
+              </a>
+            </li>
+            <li>
+              <a href='#misoimporters'>
+                Miso.Importers
+              </a>
+            </li>
+            <li>
+              <a href='#misoimporterlocal'>
+                Miso.Importer.Local
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misoimporterlocal_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misoimporterremote'>
+                Miso.Importer.Remote
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misoimporterremote_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misoimporterpolling'>
+                Miso.Importer.Polling
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misoimporterpolling_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misoimportergoog'>
+                Miso.Importer.Goog..
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misoimportergoog_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misoparsers'>
+                Miso.Parsers
+              </a>
+            </li>
+            <li>
+              <a href='#misocolumn'>
+                Miso.Column
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misocolumn_constructor'>
+                    constructor
+                  </a>
+                </li>
+              </ul>
+              <span class='instance'>
+                Instance Methods
+              </span>
+              <ul>
+                <li>
+                  <a href='#misocolumn_i_numericat'>
+                    numericAt
+                  </a>
+                </li>
+                <li>
+                  <a href='#misocolumn_i_coerce'>
+                    coerce
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypes'>
+                Miso.types
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypes_typeof'>
+                    typeof
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypesmixed'>
+                Miso.types.mixed
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypesmixed_name'>
+                    name
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesmixed_coerce'>
+                    coerce
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesmixed_test'>
+                    test
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesmixed_compare'>
+                    compare
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesmixed_numeric'>
+                    numeric
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypesstring'>
+                Miso.types.string
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypesstring_name'>
+                    name
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesstring_coerce'>
+                    coerce
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesstring_test'>
+                    test
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesstring_compare'>
+                    compare
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesstring_numeric'>
+                    numeric
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypesnumber'>
+                Miso.types.number
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypesnumber_name'>
+                    name
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesnumber_coerce'>
+                    coerce
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesnumber_test'>
+                    test
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesnumber_compare'>
+                    compare
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesnumber_numeric'>
+                    numeric
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypesboolean'>
+                Miso.types.boolean
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypesboolean_name'>
+                    name
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesboolean_coerce'>
+                    coerce
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesboolean_test'>
+                    test
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesboolean_compare'>
+                    compare
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypesboolean_numeric'>
+                    numeric
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href='#misotypestime'>
+                Miso.types.time
+              </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misotypestime_name'>
+                    name
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypestime_coerce'>
+                    coerce
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypestime_test'>
+                    test
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypestime_compare'>
+                    compare
+                  </a>
+                </li>
+                <li>
+                  <a href='#misotypestime_numeric'>
+                    numeric
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </article>
     <footer>
