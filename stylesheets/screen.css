@@ -300,7 +300,7 @@ article section div.example img, article section div.tutorial img, div.container
 }
 /* line 139, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section div.tutorial, div.container section div.tutorial {
-  min-height: 130px;
+  min-height: 140px;
 }
 /* line 142, /Users/iros/dev/opensource/guardian/themisoproject.com/src/stylesheets/_core.scss */
 article section div.tutorial:hover, div.container section div.tutorial:hover {
