@@ -2138,6 +2138,16 @@
             </ul>
           </div>
         </section>
+        <section class='api' id='misoderived'>
+          <h2>
+            Miso.Derived
+          </h2>
+          <p>
+            A <code>Miso.Derived</code> is what you will be returned from derivative operations such as
+            <code>groupBy</code> or <code>movingAverage</code>, it is essetially a <code>Miso.Dataset</code>
+            but with a syncronisation link back to its parent dataset.
+          </p>
+        </section>
         <section class='api' id='misoproduct'>
           <h2>
             Miso.Product
@@ -2692,6 +2702,21 @@
           </h2>
           <p>
             Import local data already in the environment
+            <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+            var ds = new Miso.Dataset({
+              data: [ 
+                { one : 1, two : 4, three : 7 },
+                { one : 2, two : 5, three : 8 }
+              ]
+            });
+            
+            ds.fetch({
+              success: function() {
+                log( this.column('two').data );
+              }
+            });
+            
+            </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
           </p>
           <div class='entry' id='misoimporterlocal_constructor'>
             <div class='bar'>
@@ -2755,6 +2780,17 @@
           </h2>
           <p>
             Import data from remote files via an AJAX request
+            <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+            var ds = new Miso.Dataset({
+              url: '/data/simple.json'
+            });
+            
+            ds.fetch({
+              success: function() {
+                log( this.column('two').data );
+              }
+            });
+            </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
           </p>
           <div class='entry' id='misoimporterremote_constructor'>
             <div class='bar'>
@@ -2833,7 +2869,7 @@
             Miso.Importer.Polling
           </h2>
           <p>
-            Import local data already in the environment
+            Pull data from a remote source on a regular interval
           </p>
           <div class='entry' id='misoimporterpolling_constructor'>
             <div class='bar'>
@@ -2884,6 +2920,42 @@
                     </div>
                     <p>
                       Frequency (in milliseconds) with which to fetch data
+                      <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+                      // We will only make 5 requests in this example
+                      var requests = 5, 
+                          madeRequests = 0;
+                      
+                      // query twitter for tweets containing the term "javascript"
+                      // and get 5 per page. Note that twitter uses jsonp requests, 
+                      // so we toggle that flag too.
+                      var ds = new Miso.Dataset({
+                        url : "http://search.twitter.com/search.json?q=javascript&rpp=5&callback=",
+                        interval : 1000,
+                        jsonp : true,
+                        // Because of the structure of tweets:
+                        // https://dev.twitter.com/docs/api/1/get/search
+                        // we actually extract the rows from the returned data first.
+                        extract : function(data) {
+                          return data.results;
+                        }
+                      });
+                      
+                      ds.fetch({
+                        success : function() {
+                          // track how many requests we've made
+                          madeRequests++;
+                          // If we reached our max
+                          if (madeRequests >= requests) {
+                            // stop the importer.
+                            this.importer.stop();
+                            // output our current collection of tweets
+                            log(ds.column("text").data);
+                          }
+                          // update the number of rows we now have.
+                          log(madeRequests, ds.length);
+                        }
+                      });
+                      </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
                     </p>
                   </li>
                 </ul>
@@ -2891,15 +2963,15 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoimportergoog'>
+        <section class='api' id='misoimportergooglespreadsheet'>
           <h2>
-            Miso.Importer.Goog..
+            Miso.Importer.GoogleSpreadsheet
           </h2>
           <p>
             Import directly from google spreadsheets, see
             <a href='dataset/tutorials/googlespreadsheets'>the Google Spreadsheets guide.</a>
           </p>
-          <div class='entry' id='misoimportergoog_constructor'>
+          <div class='entry' id='misoimportergooglespreadsheet_constructor'>
             <div class='bar'>
               <h3>
                 new Miso.Importer.GoogleSpreadsheet( options )
@@ -4680,6 +4752,11 @@
               </ul>
             </li>
             <li>
+              <a href='#misoderived'>
+                Miso.Derived
+              </a>
+            </li>
+            <li>
               <a href='#misoproduct'>
                 Miso.Product
               </a>
@@ -4808,12 +4885,12 @@
               </ul>
             </li>
             <li>
-              <a href='#misoimportergoog'>
-                Miso.Importer.Goog..
+              <a href='#misoimportergooglespreadsheet'>
+                Miso.Importer.GoogleSp...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoimportergoog_constructor'>
+                  <a href='#misoimportergooglespreadsheet_constructor'>
                     constructor
                   </a>
                 </li>
