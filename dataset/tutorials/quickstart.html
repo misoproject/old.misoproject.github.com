@@ -85,7 +85,7 @@
           </div>
           <h4>Include the appropriate script tags:</h4>
           <p>
-            <div class="codeblock"><textarea  class="code" mode="text/html"   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+            <div class="codeblock"><textarea name="codehelper"  class="code" mode="text/html"   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
             &lt;!DOCTYPE&nbsp;HTML&gt;
             &lt;html&gt;
             &lt;head&gt;
@@ -140,7 +140,7 @@
             In this example we are going to create a dataset that is based on a collection of objects, each representing a row.
             Let's assume you have a local var that contains the following array of objects:
             <p>
-              <div class="codeblock"><textarea  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
               var data = [
                 { color : "red",   r : 255, g : 0,   b : 0   },
                 { color : "blue",  r : 0,   g : 0,   b : 255 },
@@ -155,7 +155,7 @@
                   { color : "blue",  r : 0,   g : 0,   b : 255 },
                   { color : "green", r : 0,   g : 255, b : 0   }
                 ];</script></div>
-                <div class="codeblock"><textarea id="quickstart-dataset" class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+                <div class="codeblock"><textarea name="codehelper" id="quickstart-dataset" class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
                 var ds = new Miso.Dataset({
                   data : data
                 });
@@ -181,7 +181,7 @@
           </p>
           <p>
             Note that the data above is comma, delimited. You can create a dataset against this url like so.
-            <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+            <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
             var ds = new Miso.Dataset({
               url : '/data/crudeoil.csv',
               delimiter : ','

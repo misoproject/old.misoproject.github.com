@@ -90,7 +90,7 @@
           numbers or timestamps to <code>moment</code> objects. For example, coercing an incoming
           timestamp string column into a time column and the total column to a numeric
           type would look like so:
-          <div class="codeblock"><textarea  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           var ds = new Miso.Dataset({
             data : [
               { count : 12,  total : "40",  timestamp : "2012 04_20" },
@@ -115,7 +115,7 @@
         </p>
         <p>
           To define a new type, the required signature is as follows:
-          <div class="codeblock"><textarea  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           // all types live under the Miso.types namespace.
           // Beware of overriding existing types. 
           // Nothing is stopping you from doing that.
@@ -149,7 +149,7 @@
         </p>
         <p>
           For example, we might define a custom <code>phone</code> type like so:
-          <div class="codeblock"><textarea id="customPhoneType" class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+          <div class="codeblock"><textarea name="codehelper" id="customPhoneType" class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
           // dummy phone number class
           var PhoneNumber = function(areacode, number) {
             this.areacode = +areacode;
