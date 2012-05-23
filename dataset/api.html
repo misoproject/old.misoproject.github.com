@@ -50,6 +50,11 @@
         </a>
       </span>
       <span>
+        <a href='/dataset/extensions.html'>
+          Extensions
+        </a>
+      </span>
+      <span>
         <a href='http://www.github.com/misoproject/dataset'>
           Code (Github)
         </a>
@@ -462,58 +467,6 @@
                     </p>
                   </li>
                 </ul>
-              </li>
-            </ul>
-          </div>
-          <div class='entry' id='misodataset_i_apply'>
-            <div class='bar'>
-              <h3>
-                ds.apply( data )
-              </h3>
-              <span class='returns'>
-                Returns:
-                <span class='object'>
-                  undefined
-                </span>
-              </span>
-            </div>
-            <p>
-              Applies the data to the dataset. It can add it blindly, replace all existing or add only unique rows
-              based on a column. This is called internally by fetch and most likely will never need to be directly by a user.
-              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              var ds = new Miso.Dataset({
-                data: [ 
-                  { one : 1, two : 4, three : 7 } 
-                ]
-              });
-              
-              ds.fetch({
-                success: function() {
-                  // add a row
-                  this.add({ one: 7, two: null, three: null });
-                  log( this.toJSON() );
-                }
-              });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-            </p>
-            <h3>
-              Parameters
-            </h3>
-            <ul class='parameters'>
-              <li>
-                <div class='head'>
-                  <span class='name'>
-                    data
-                  </span>
-                  <span class='type'>
-                    Object
-                  </span>
-                  <span class='required'>
-                    required
-                  </span>
-                </div>
-                <p>
-                  Data to be applied (added or replacing) to the dataset in whatever format the parser expects
-                </p>
               </li>
             </ul>
           </div>
@@ -4528,11 +4481,6 @@
                 <li>
                   <a href='#misodataset_i_fetch'>
                     fetch
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataset_i_apply'>
-                    apply
                   </a>
                 </li>
                 <li>
