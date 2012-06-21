@@ -172,6 +172,22 @@
                   <li>
                     <div class='head'>
                       <span class='name'>
+                        callback
+                      </span>
+                      <span class='type'>
+                        String
+                      </span>
+                      <span class='optional'>
+                        optional
+                      </span>
+                    </div>
+                    <p>
+                      By default, If making a jsonp request, you can use this parameter to specify an  alternate callback function name than the one that would be auto generated for you.
+                    </p>
+                  </li>
+                  <li>
+                    <div class='head'>
+                      <span class='name'>
                         delimiter
                       </span>
                       <span class='type'>
@@ -281,7 +297,7 @@
                         deferred
                       </span>
                       <span class='type'>
-                        Function
+                        Object
                       </span>
                       <span class='optional'>
                         optional
@@ -1253,6 +1269,75 @@
               </li>
             </ul>
           </div>
+          <div class='entry' id='misodataview_i_reverseeach'>
+            <div class='bar'>
+              <h3>
+                ds.reverseEach( iterator, context )
+              </h3>
+              <span class='returns'>
+                Returns:
+                <span class='object'>
+                  
+                </span>
+              </span>
+            </div>
+            <p>
+              Iterate over all rows in reverse. Each row is not a direct reference to the data
+              and thus should not be altered in any way.
+              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              var ds = new Miso.Dataset({
+                data : [
+                  { one : 12,  two : 4},
+                  { one : 1,   two : 40},
+                  { one : 102, two : 430}
+                ]
+              });
+              ds.fetch({ 
+                success : function() {
+                  this.reverseEach(function(row) {
+                    log(JSON.stringify(row));
+                  });
+                }
+              });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+            </p>
+            <h3>
+              Parameters
+            </h3>
+            <ul class='parameters'>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    iterator
+                  </span>
+                  <span class='type'>
+                    Function
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  A function with the following signature: <code>function(row, rowIndex)</code>'
+                </p>
+              </li>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    context
+                  </span>
+                  <span class='type'>
+                    Object
+                  </span>
+                  <span class='optional'>
+                    optional
+                  </span>
+                </div>
+                <p>
+                  The context to be bound to the iterator.
+                </p>
+              </li>
+            </ul>
+          </div>
           <div class='entry' id='misodataview_i_rowbyposition'>
             <div class='bar'>
               <h3>
@@ -1416,7 +1501,7 @@
           <div class='entry' id='misodataview_i_sort'>
             <div class='bar'>
               <h3>
-                ds.sort( options )
+                ds.sort( args )
               </h3>
               <span class='returns'>
                 Returns:
@@ -1441,16 +1526,14 @@
               ds.fetch({ success: function() {
                 log("Before Sort", this.toJSON());
               
-                this.sort({ 
-                  comparator: function(rowA, rowB) {
-                    if (rowA.three > rowB.three) { 
-                      return -1; 
-                    }
-                    if (rowA.three < rowB.three) { 
-                      return 1;  
-                    }
-                    return 0;
+                this.sort(function(rowA, rowB) {
+                  if (rowA.three > rowB.three) { 
+                    return -1; 
                   }
+                  if (rowA.three < rowB.three) { 
+                    return 1;  
+                  }
+                  return 0;
                 });
               
                 log("After Sort", this.toJSON());
@@ -1463,7 +1546,7 @@
               <li>
                 <div class='head'>
                   <span class='name'>
-                    options
+                    args
                   </span>
                   <span class='type'>
                     Object
@@ -1473,7 +1556,7 @@
                   </span>
                 </div>
                 <p>
-                  Options object
+                  Comparator Function OR Options object
                 </p>
                 <ul>
                   <li>
@@ -1572,7 +1655,7 @@
                   </span>
                 </div>
                 <p>
-                  Options object
+                  Could be a function that takes in a row or an options object that can contain the following parameters.
                 </p>
                 <ul>
                   <li>
@@ -1706,7 +1789,25 @@
                       </span>
                     </div>
                     <p>
-                      Function that specifies the way in which the columns are aggregated. The default is sum. The function signature is <code>function(arr)</code>. It should return a single result.
+                      Function that specifies the way in which the columns are aggregated. The default is sum.
+                      The function signature is <code>function(arr)</code>. It should return a single result.
+                    </p>
+                  </li>
+                  <li>
+                    <div class='head'>
+                      <span class='name'>
+                        rejectNA
+                      </span>
+                      <span class='type'>
+                        boolean
+                      </span>
+                      <span class='optional'>
+                        optional
+                      </span>
+                    </div>
+                    <p>
+                      Set to true to remove nulls, undefined and empty values before computing group by. Set to true
+                      by default. Set to false to turn this off.
                     </p>
                   </li>
                 </ul>
@@ -2112,6 +2213,78 @@
             product when the underlying dataset changes in a way which affects the current value of
             the product.
           </p>
+          <div class='entry' id='misoproduct_misoproductdefine'>
+            <div class='bar'>
+              <h3>
+                Miso.Product.define(func)
+              </h3>
+              <span class='returns'>
+                Returns:
+                <span class='object'>
+                  Function
+                </span>
+              </span>
+            </div>
+            <p>
+              Use this method to define a new product. For example:
+              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              // initialize a new dataset
+              var ds = new Miso.Dataset({
+                data: { 
+                  columns : [ 
+                    { name : "one", data : [10, 2, 3] },
+                    { name : "two", data : [1, 20, 3] }
+                  ] 
+                },
+                strict: true
+              });
+              
+              Miso.Dataset.prototype.random = Miso.Product.define(function(columns) {
+                  
+                  // assemble all the data 
+                  // values into a single array temporarily
+                  var values = [];
+                  _.each(columns, function(column) {
+                    values.push(column.data);
+                  }, this);
+              
+                  // flatten the values
+                  values = _.flatten(values);
+              
+                  // get a random value from the total array of values
+                  // we gathered.
+                  return values[Math.floor(Math.random() * values.length)];
+                }
+              );
+              
+              ds.fetch({
+                success : function() {
+                  log(this.random(["one", "two"]));    
+                }
+              });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+            </p>
+            <h3>
+              Parameters
+            </h3>
+            <ul class='parameters'>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    func
+                  </span>
+                  <span class='type'>
+                    Function
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  The function which will be wrapped to create a product. Function signature is function(columns, options)
+                </p>
+              </li>
+            </ul>
+          </div>
           <h3 class='instance'>
             Instance Methods
           </h3>
@@ -3033,7 +3206,10 @@
           </h2>
           <p>
             <p>
-              To specify a custom parser, during dataset instantiation set the <code>parser</code> property to the class name of the parser you want. Some parsers require some custom properties. This section will document the properties you can set that will either cause this parser to be selected or will be required by it to continue.
+              To specify a custom parser, during dataset instantiation set the <code>parser</code> property
+              to the class name of the parser you want. Some parsers require some custom properties.
+              This section will document the properties you can set that will either cause this parser
+              to be selected or will be required by it to continue.
             </p>
             <p>
               Built in Parsers include:
@@ -3083,7 +3259,10 @@
             <h3>Miso.Parsers.Strict</h3>
             <p>
               <ul>
-                <li><code>strict</code> - Set this to true when initializing a dataset to indicate the default internal format should be used.</li>
+                <li>
+                  <code>strict</code> - Set this to true when initializing a dataset to indicate
+                  the default internal format should be used.
+                </li>
               </ul>
             </p>
             <h3>Miso.Parsers.Object</h3>
@@ -3098,8 +3277,13 @@
             <h3>Miso.Parsers.Delimited</h3>
             <p>
               <ul>
-                <li><code>delimited</code> - The string that is delimiting the column values.</li>
+                <li><code>delimiter</code> - The string that is delimiting the column values.</li>
               </ul>
+            </p>
+            <p>
+              <b>Note:</b>
+              The delimited parser will assign custom column names in case the header row exists, but has
+              missing values. They will be of the form XN where N starts at 0.
             </p>
           </p>
         </section>
@@ -4539,6 +4723,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href='#misodataview_i_reverseeach'>
+                    reverseEach
+                  </a>
+                </li>
+                <li>
                   <a href='#misodataview_i_rowbyposition'>
                     rowByPosition
                   </a>
@@ -4654,6 +4843,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href='#misodataview_i_reverseeach'>
+                    reverseEach
+                  </a>
+                </li>
+                <li>
                   <a href='#misodataview_i_rowbyposition'>
                     rowByPosition
                   </a>
@@ -4739,6 +4933,13 @@
               <a href='#misoproduct'>
                 Miso.Product
               </a>
+              <ul class='object'>
+                <li>
+                  <a href='#misoproduct_misoproductdefine'>
+                    Miso.Product.define
+                  </a>
+                </li>
+              </ul>
               <span class='instance'>
                 Instance Methods
               </span>
