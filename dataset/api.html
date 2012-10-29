@@ -68,7 +68,9 @@
           </h2>
           <p>
             Miso.Dataset is the main object you will instantiate to create a new dataset.
-            A <code>Miso.Dataset</code> also extends from <code>Miso.DataView</code>. All the methods available on a <code>Miso.DataView</code> will also be available on the dataset.
+            A <code>Miso.Dataset</code> also extends from <code>Miso.Dataset.DataView</code>.
+            All the methods available on a <code>Miso.Dataset.DataView</code> will also be
+            available on the dataset.
           </p>
           <div class='entry' id='misodataset_constructor'>
             <div class='bar'>
@@ -313,14 +315,14 @@
                         importer
                       </span>
                       <span class='type'>
-                        Miso.Importer
+                        Miso.Dataset.Importers
                       </span>
                       <span class='optional'>
                         optional
                       </span>
                     </div>
                     <p>
-                      The classname of any importer (passes through auto detection based on parameters. For example: <code>Miso.Importers.Polling</code>.
+                      The classname of any importer (passes through auto detection based on parameters. For example: <code>Miso.Dataset.Importers.Polling</code>.
                       See the
                       <a href='dataset/tutorials/creating'>Creating a dataset</a>
                       guide for more information.
@@ -332,14 +334,14 @@
                         parser
                       </span>
                       <span class='type'>
-                        Miso.Parser
+                        Miso.Dataset.Parsers
                       </span>
                       <span class='optional'>
                         optional
                       </span>
                     </div>
                     <p>
-                      The classname of any parser (passes through auto detection based on parameters. For example: <code>Miso.Parsers.Delimited</code>.
+                      The classname of any parser (passes through auto detection based on parameters. For example: <code>Miso.Dataset.Parsers.Delimited</code>.
                       See the
                       <a href='dataset/tutorials/creating'>Creating a dataset</a>
                       guide for more information.
@@ -391,6 +393,22 @@
                     </div>
                     <p>
                       Polling interval. Set to any value in milliseconds to enable polling on a url.
+                    </p>
+                  </li>
+                  <li>
+                    <div class='head'>
+                      <span class='name'>
+                        idAttribute
+                      </span>
+                      <span class='type'>
+                        String
+                      </span>
+                      <span class='optional'>
+                        optional
+                      </span>
+                    </div>
+                    <p>
+                      By default all ids are stored in a column called '_id'. If there is an alternate column in the dataset that already includes a unique identifier, specify its name here. Note that the row objects will no longer have an _id property.
                     </p>
                   </li>
                 </ul>
@@ -494,7 +512,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Column
+                  Miso.Dataset.Column
                 </span>
               </span>
             </div>
@@ -618,6 +636,75 @@
                     </p>
                   </li>
                 </ul>
+              </li>
+            </ul>
+          </div>
+          <div class='entry' id='misodataset_i_addcomputedcolumn'>
+            <div class='bar'>
+              <h3>
+                ds.addComputedColumn( name, type, func )
+              </h3>
+              <span class='returns'>
+                Returns:
+                <span class='object'>
+                  Miso.Dataset.Column
+                </span>
+              </span>
+            </div>
+            <p>
+              Creates a new column that is computationally derived from the rest of the row. See the <a href="/dataset/tutorials/computed.html">Computed columns</a> tutorial for more information.
+            </p>
+            <h3>
+              Parameters
+            </h3>
+            <ul class='parameters'>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    name
+                  </span>
+                  <span class='type'>
+                    String
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  Name of the column to be added. Must not already exist.
+                </p>
+              </li>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    type
+                  </span>
+                  <span class='type'>
+                    String
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  The type of the column to be added. Must match one of the Miso.Dataset.types.
+                </p>
+              </li>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    func
+                  </span>
+                  <span class='type'>
+                    function
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  The way that the new column is derived. It takes a row as a parameter.
+                </p>
               </li>
             </ul>
           </div>
@@ -799,7 +886,7 @@
           <div class='entry' id='misodataset_i_update'>
             <div class='bar'>
               <h3>
-                ds.update( filter, newProperties, options )
+                ds.update( rowsOrFunction, options )
               </h3>
               <span class='returns'>
                 Returns:
@@ -809,7 +896,11 @@
               </span>
             </div>
             <p>
-              Updates one or more rows in a dataset. This will fire <code>update</code> and <code>change</code> events on a syncable dataset.
+              Updates one or more rows in a dataset. You can pass either a row object that contains an the identifying id property and altered property,
+              an array of objects of the same form or a function that will be first applied to all rows.
+              The function should take a `row` object for each row in the dataset. If a row shouldn't be modified, the function
+              can return false for that row.
+              This will fire <code>update</code> and <code>change</code> events on a syncable dataset.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
               var ds = new Miso.Dataset({
                 data: [ 
@@ -823,10 +914,21 @@
               
                   log(this.column('two').data);
               
+                  // update just the first row
+                  var firstRow = this.rowByPosition(0);
+                  this.update({ _id : firstRow._id, one : 100 });
+              
+                  log(this.rowByPosition(0));
+              
                   // update all rows where col three == 7
                   this.update(function(row) {
-                    return row.three === 7;
-                  }, { two: 99 });
+                    if (row.three === 7) {
+                      row.two = 99;
+                      return row;
+                    } else {
+                      return false;
+                    }
+                  });
               
                   log(this.column('two').data);
                 }
@@ -936,9 +1038,9 @@
             </p>
           </div>
         </section>
-        <section class='api' id='misodataview'>
+        <section class='api' id='misodatasetdataview'>
           <h2>
-            Miso.Dataview
+            Miso.Dataset.DataView
           </h2>
           <p>
             A <code>Miso.DataView</code> is an immutable version of dataset. It is the result of selecting a subset of the data using the <code>ds.where</code> call. If the dataset is syncing, this view will be updated when changes take place in the original dataset.
@@ -947,7 +1049,7 @@
           <h3 class='instance'>
             Instance Methods
           </h3>
-          <div class='entry' id='misodataview_i_columnnames'>
+          <div class='entry' id='misodatasetdataview_i_columnnames'>
             <div class='bar'>
               <h3>
                 ds.columnNames()
@@ -977,7 +1079,7 @@
               </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
             </p>
           </div>
-          <div class='entry' id='misodataview_i_column'>
+          <div class='entry' id='misodatasetdataview_i_column'>
             <div class='bar'>
               <h3>
                 ds.column( name )
@@ -1028,7 +1130,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_columns'>
+          <div class='entry' id='misodatasetdataview_i_columns'>
             <div class='bar'>
               <h3>
                 ds.columns( nameArray )
@@ -1036,7 +1138,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Dataview
+                  Miso.Dataset.DataView
                 </span>
               </span>
             </div>
@@ -1081,7 +1183,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_hascolumn'>
+          <div class='entry' id='misodatasetdataview_i_hascolumn'>
             <div class='bar'>
               <h3>
                 ds.hasColumn( name )
@@ -1131,7 +1233,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_eachcolumn'>
+          <div class='entry' id='misodatasetdataview_i_eachcolumn'>
             <div class='bar'>
               <h3>
                 ds.eachColumn( iterator, context )
@@ -1200,7 +1302,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_each'>
+          <div class='entry' id='misodatasetdataview_i_each'>
             <div class='bar'>
               <h3>
                 ds.each( iterator, context )
@@ -1269,7 +1371,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_reverseeach'>
+          <div class='entry' id='misodatasetdataview_i_reverseeach'>
             <div class='bar'>
               <h3>
                 ds.reverseEach( iterator, context )
@@ -1338,7 +1440,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_rowbyposition'>
+          <div class='entry' id='misodatasetdataview_i_rowbyposition'>
             <div class='bar'>
               <h3>
                 ds.rowByPosition( position )
@@ -1387,7 +1489,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_rowbyid'>
+          <div class='entry' id='misodatasetdataview_i_rowbyid'>
             <div class='bar'>
               <h3>
                 ds.rowById( id )
@@ -1440,7 +1542,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_rows'>
+          <div class='entry' id='misodatasetdataview_i_rows'>
             <div class='bar'>
               <h3>
                 ds.rows( rowFilter )
@@ -1448,7 +1550,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Dataview
+                  Miso.Dataset.DataView
                 </span>
               </span>
             </div>
@@ -1498,7 +1600,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_sort'>
+          <div class='entry' id='misodatasetdataview_i_sort'>
             <div class='bar'>
               <h3>
                 ds.sort( args )
@@ -1506,7 +1608,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Dataview
+                  Miso.Dataset.DataView
                 </span>
               </span>
             </div>
@@ -1597,7 +1699,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_where'>
+          <div class='entry' id='misodatasetdataview_i_where'>
             <div class='bar'>
               <h3>
                 ds.where( filters, options)
@@ -1605,7 +1707,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Dataview
+                  Miso.Dataset.DataView
                 </span>
               </span>
             </div>
@@ -1695,7 +1797,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_groupby'>
+          <div class='entry' id='misodatasetdataview_i_groupby'>
             <div class='bar'>
               <h3>
                 ds.groupBy(byColumn, columns, options)
@@ -1703,7 +1805,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Derived
+                  Miso.Dataset.Derived
                 </span>
               </span>
             </div>
@@ -1814,7 +1916,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_countby'>
+          <div class='entry' id='misodatasetdataview_i_countby'>
             <div class='bar'>
               <h3>
                 ds.countBy(byColumn, options)
@@ -1822,7 +1924,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Derived
+                  Miso.Dataset.Derived
                 </span>
               </span>
             </div>
@@ -1881,7 +1983,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_movingaverage'>
+          <div class='entry' id='misodatasetdataview_i_movingaverage'>
             <div class='bar'>
               <h3>
                 ds.movingAverage(columns, size, options)
@@ -1889,7 +1991,7 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Derived
+                  Miso.Dataset.Derived
                 </span>
               </span>
             </div>
@@ -1968,7 +2070,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_min'>
+          <div class='entry' id='misodatasetdataview_i_min'>
             <div class='bar'>
               <h3>
                 ds.min( column )
@@ -1976,12 +2078,12 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Number || Miso.Product
+                  Number || Miso.Dataset.Product
                 </span>
               </span>
             </div>
             <p>
-              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Product</code> that can
+              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
               be used to bind events to and access the current value. Otherwise it will return the current
               value - the lowest numeric value in that column
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
@@ -2023,7 +2125,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_max'>
+          <div class='entry' id='misodatasetdataview_i_max'>
             <div class='bar'>
               <h3>
                 ds.max( column )
@@ -2031,12 +2133,12 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Number || Miso.Product
+                  Number || Miso.Dataset.Product
                 </span>
               </span>
             </div>
             <p>
-              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Product</code> that can
+              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
               be used to bind events to and access the current value. Otherwise it will return the current
               value - the highest numeric value in that column
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
@@ -2078,7 +2180,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_sum'>
+          <div class='entry' id='misodatasetdataview_i_sum'>
             <div class='bar'>
               <h3>
                 ds.sum( column )
@@ -2086,12 +2188,12 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Number || Miso.Product
+                  Number || Miso.Dataset.Product
                 </span>
               </span>
             </div>
             <p>
-              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Product</code> that can
+              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
               be used to bind events to and access the current value. Otherwise it will return the current
               value - the sum of the numeric form of the values in the column.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
@@ -2134,7 +2236,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misodataview_i_mean'>
+          <div class='entry' id='misodatasetdataview_i_mean'>
             <div class='bar'>
               <h3>
                 ds.mean( column )
@@ -2142,12 +2244,12 @@
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Number || Miso.Product
+                  Number || Miso.Dataset.Product
                 </span>
               </span>
             </div>
             <p>
-              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Product</code> that can
+              If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
               be used to bind events to and access the current value. Otherwise it will return the current
               value - the mean or average of the numeric form of the values in the column.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
@@ -2192,31 +2294,31 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoderived'>
+        <section class='api' id='misodatasetderived'>
           <h2>
-            Miso.Derived
+            Miso.Dataset.Derived
           </h2>
           <p>
-            A <code>Miso.Derived</code> is what you will be returned from derivative operations such as
+            A <code>Miso.Dataset.Derived</code> is what you will be returned from derivative operations such as
             <code>groupBy</code> or <code>movingAverage</code>, it is essetially a <code>Miso.Dataset</code>
             but with a syncronisation link back to its parent dataset.
           </p>
         </section>
-        <section class='api' id='misoproduct'>
+        <section class='api' id='misodatasetproduct'>
           <h2>
-            Miso.Product
+            Miso.Dataset.Product
           </h2>
           <p>
-            A <code>Miso.Product</code> is what you will be returned if you run a method such as
+            A <code>Miso.Dataset.Product</code> is what you will be returned if you run a method such as
             <code>max</code> on a dataset that has <code>sync</code> set to true. The product object
             allows you to bind events to it, meaning you can automatically update anything using the
             product when the underlying dataset changes in a way which affects the current value of
             the product.
           </p>
-          <div class='entry' id='misoproduct_misoproductdefine'>
+          <div class='entry' id='misodatasetproduct_misodatasetproductdefine'>
             <div class='bar'>
               <h3>
-                Miso.Product.define(func)
+                Miso.Dataset.Product.define(func)
               </h3>
               <span class='returns'>
                 Returns:
@@ -2239,7 +2341,7 @@
                 strict: true
               });
               
-              Miso.Dataset.prototype.random = Miso.Product.define(function(columns) {
+              Miso.Dataset.prototype.random = Miso.Dataset.Product.define(function(columns) {
                   
                   // assemble all the data 
                   // values into a single array temporarily
@@ -2288,7 +2390,7 @@
           <h3 class='instance'>
             Instance Methods
           </h3>
-          <div class='entry' id='misoproduct_i_val'>
+          <div class='entry' id='misodatasetproduct_i_val'>
             <div class='bar'>
               <h3>
                 product.val()
@@ -2329,18 +2431,18 @@
             </p>
           </div>
         </section>
-        <section class='api' id='misoevents'>
+        <section class='api' id='misodatasetevents'>
           <h2>
-            Miso.Events
+            Miso.Dataset.Events
           </h2>
           <p>
-            Miso.Events is a mixin used to add event binding/triggering functionality to many parts of
+            Miso.Dataset.Events is a mixin used to add event binding/triggering functionality to many parts of
             dataset.
           </p>
           <h3 class='instance'>
             Instance Methods
           </h3>
-          <div class='entry' id='misoevents_i_bind'>
+          <div class='entry' id='misodatasetevents_i_bind'>
             <div class='bar'>
               <h3>
                 obj.bind(event, callback, context)
@@ -2420,7 +2522,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misoevents_i_unbind'>
+          <div class='entry' id='misodatasetevents_i_unbind'>
             <div class='bar'>
               <h3>
                 obj.unbind(event, callback)
@@ -2490,7 +2592,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misoevents_i_trigger'>
+          <div class='entry' id='misodatasetevents_i_trigger'>
             <div class='bar'>
               <h3>
                 obj.trigger(event)
@@ -2539,18 +2641,18 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoevent'>
+        <section class='api' id='misodatasetevent'>
           <h2>
-            Miso.Event
+            Miso.Dataset.Event
           </h2>
           <p>
-            Miso.Events are objects that will be passed to event callbacks bound to
+            Miso.Dataset.Events are objects that will be passed to event callbacks bound to
             dataset objects that contain information about the event and what has changed.
             See the
             <a href='dataset/tutorials/events'>Events tutorial</a>
             for more information.
           </p>
-          <div class='entry' id='misoevent_isremove'>
+          <div class='entry' id='misodatasetevent_isremove'>
             <div class='bar'>
               <h3>
                 event.isRemove(delta)
@@ -2576,7 +2678,7 @@
               ds.fetch({
                 success: function() {
                   this.bind('change', function( event ) {
-                    log( 'Remove ?: ' + Miso.Event.isRemove(event.deltas[0]) );
+                    log( 'Remove ?: ' + Miso.Dataset.Event.isRemove(event.deltas[0]) );
                   });
                 }
               });
@@ -2610,7 +2712,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misoevent_isadd'>
+          <div class='entry' id='misodatasetevent_isadd'>
             <div class='bar'>
               <h3>
                 event.isAdd(delta)
@@ -2636,7 +2738,7 @@
               ds.fetch({
                 success: function() {
                   this.bind('change', function( event ) {
-                    log( 'Add ?: ' + Miso.Event.isAdd(event.deltas[0]) );
+                    log( 'Add ?: ' + Miso.Dataset.Event.isAdd(event.deltas[0]) );
                   });
                 }
               });
@@ -2671,7 +2773,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misoevent_isupdate'>
+          <div class='entry' id='misodatasetevent_isupdate'>
             <div class='bar'>
               <h3>
                 event.isUpdate(delta)
@@ -2697,7 +2799,7 @@
               ds.fetch({
                 success: function() {
                   this.bind('change', function( event ) {
-                    log( 'Update ?: ' + Miso.Event.isUpdate(event.deltas[0]) );
+                    log( 'Update ?: ' + Miso.Dataset.Event.isUpdate(event.deltas[0]) );
                   });
                 }
               });
@@ -2736,7 +2838,7 @@
           <h3 class='instance'>
             Instance Methods
           </h3>
-          <div class='entry' id='misoevent_i_affectedcolumns'>
+          <div class='entry' id='misodatasetevent_i_affectedcolumns'>
             <div class='bar'>
               <h3>
                 event.affectedColumns()
@@ -2772,9 +2874,9 @@
             </p>
           </div>
         </section>
-        <section class='api' id='misoimporters'>
+        <section class='api' id='misodatasetimporters'>
           <h2>
-            Miso.Importers
+            Miso.Dataset.Importers
           </h2>
           <p>
             <p>
@@ -2783,16 +2885,16 @@
             <p>
               Built in Importers include:
               <ul>
-                <li><code>Miso.Importers.Local</code></li>
-                <li><code>Miso.Importers.Remote</code></li>
-                <li><code>Miso.Importers.Polling</code></li>
-                <li><code>Miso.Importers.GoogleSpreadsheet</code></li>
+                <li><code>Miso.Dataset.Importers.Local</code></li>
+                <li><code>Miso.Dataset.Importers.Remote</code></li>
+                <li><code>Miso.Dataset.Importers.Polling</code></li>
+                <li><code>Miso.Dataset.Importers.GoogleSpreadsheet</code></li>
               </ul>
             </p>
             <p>
               An importer must implement the following interface:
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              Miso.Importers.MyCustomImporter = function(options) {
+              Miso.Dataset.Importers.MyCustomImporter = function(options) {
                 // save your options
                 // overwrite 'extract' function if you want
                 // but don't forget users can overwrite that when
@@ -2800,8 +2902,8 @@
               };
               
               _.extend(
-                Miso.Importers.MyCustomImporter.prototype, 
-                Miso.Importers.prototype, 
+                Miso.Dataset.Importers.MyCustomImporter.prototype, 
+                Miso.Dataset.Importers.prototype, 
                 {
                   
                   // required method fetch must be defined.
@@ -2822,9 +2924,9 @@
             </p>
           </p>
         </section>
-        <section class='api' id='misoimporterlocal'>
+        <section class='api' id='misodatasetimporterslocal'>
           <h2>
-            Miso.Importer.Local
+            Miso.Dataset.Importers.Local
           </h2>
           <p>
             Import local data already in the environment
@@ -2844,15 +2946,15 @@
             
             </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
           </p>
-          <div class='entry' id='misoimporterlocal_constructor'>
+          <div class='entry' id='misodatasetimporterslocal_constructor'>
             <div class='bar'>
               <h3>
-                new Miso.Importer.Local( options )
+                new Miso.Dataset.Importers.Local( options )
               </h3>
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Importer
+                  Miso.Dataset.Importers
                 </span>
               </span>
             </div>
@@ -2900,9 +3002,9 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoimporterremote'>
+        <section class='api' id='misodatasetimportersremote'>
           <h2>
-            Miso.Importer.Remote
+            Miso.Dataset.Importers.Remote
           </h2>
           <p>
             Import data from remote files via an AJAX request
@@ -2918,15 +3020,15 @@
             });
             </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
           </p>
-          <div class='entry' id='misoimporterremote_constructor'>
+          <div class='entry' id='misodatasetimportersremote_constructor'>
             <div class='bar'>
               <h3>
-                new Miso.Importer.Remote( options )
+                new Miso.Dataset.Importers.Remote( options )
               </h3>
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Importer
+                  Miso.Dataset.Importers
                 </span>
               </span>
             </div>
@@ -2990,9 +3092,9 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoimporterpolling'>
+        <section class='api' id='misodatasetimporterspolling'>
           <h2>
-            Miso.Importer.Polling
+            Miso.Dataset.Importers.Polling
           </h2>
           <p>
             Pull data from a remote source on a regular interval
@@ -3032,15 +3134,15 @@
             });
             </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
           </p>
-          <div class='entry' id='misoimporterpolling_constructor'>
+          <div class='entry' id='misodatasetimporterspolling_constructor'>
             <div class='bar'>
               <h3>
-                new Miso.Importer.Polling( options )
+                new Miso.Dataset.Importers.Polling( options )
               </h3>
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Importer
+                  Miso.Dataset.Importers
                 </span>
               </span>
             </div>
@@ -3088,23 +3190,23 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoimportergooglespreadsheet'>
+        <section class='api' id='misodatasetimportersgooglespreadsheet'>
           <h2>
-            Miso.Importer.GoogleSpreadsheet
+            Miso.Dataset.Importers.GoogleSpreadsheet
           </h2>
           <p>
             Import directly from google spreadsheets, see
             <a href='dataset/tutorials/googlespreadsheets'>the Google Spreadsheets guide.</a>
           </p>
-          <div class='entry' id='misoimportergooglespreadsheet_constructor'>
+          <div class='entry' id='misodatasetimportersgooglespreadsheet_constructor'>
             <div class='bar'>
               <h3>
-                new Miso.Importer.GoogleSpreadsheet( options )
+                new Miso.Dataset.Importers.GoogleSpreadsheet( options )
               </h3>
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Importer
+                  Miso.Dataset.Importers
                 </span>
               </span>
             </div>
@@ -3200,9 +3302,9 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misoparsers'>
+        <section class='api' id='misodatasetparsers'>
           <h2>
-            Miso.Parsers
+            Miso.Dataset.Parsers
           </h2>
           <p>
             <p>
@@ -3214,10 +3316,10 @@
             <p>
               Built in Parsers include:
               <ul>
-                <li><code>Miso.Parsers.Strict</code></li>
-                <li><code>Miso.Parsers.Object</code></li>
-                <li><code>Miso.Parsers.Delimited</code></li>
-                <li><code>Miso.Parsers.GoogleSpreadsheet</code></li>
+                <li><code>Miso.Dataset.Parsers.Strict</code></li>
+                <li><code>Miso.Dataset.Parsers.Object</code></li>
+                <li><code>Miso.Dataset.Parsers.Delimited</code></li>
+                <li><code>Miso.Dataset.Parsers.GoogleSpreadsheet</code></li>
               </ul>
             </p>
             <p>
@@ -3225,11 +3327,11 @@
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
               // Pass in the data you'll be parsing
               // Take in any potential options you might need for your parser
-              Miso.Parsers.MyCustomParser = function(data, options) {};
+              Miso.Dataset.Parsers.MyCustomParser = function(data, options) {};
               
               _.extend(
-                Miso.Parsers.MyCustomParser.prototype, 
-                Miso.Parsers.prototype, 
+                Miso.Dataset.Parsers.MyCustomParser.prototype, 
+                Miso.Dataset.Parsers.prototype, 
                 {
                   // required method parse must be defined:
                   parse : function(data) {
@@ -3256,7 +3358,7 @@
                 }
               );</textarea></div>
             </p>
-            <h3>Miso.Parsers.Strict</h3>
+            <h3>Miso.Dataset.Parsers.Strict</h3>
             <p>
               <ul>
                 <li>
@@ -3265,7 +3367,7 @@
                 </li>
               </ul>
             </p>
-            <h3>Miso.Parsers.Object</h3>
+            <h3>Miso.Dataset.Parsers.Object</h3>
             <p>
               The object parser expects an array of objects where each key is the column name.
             </p>
@@ -3274,7 +3376,7 @@
                 <li><code>data</code> - The local var containing the data to be parsed.</li>
               </ul>
             </p>
-            <h3>Miso.Parsers.Delimited</h3>
+            <h3>Miso.Dataset.Parsers.Delimited</h3>
             <p>
               <ul>
                 <li><code>delimiter</code> - The string that is delimiting the column values.</li>
@@ -3287,29 +3389,29 @@
             </p>
           </p>
         </section>
-        <section class='api' id='misocolumn'>
+        <section class='api' id='misodatasetcolumn'>
           <h2>
-            Miso.Column
+            Miso.Dataset.Column
           </h2>
           <p>
-            Miso.Column objects make up the columns contained in a dataset and are returned by some methods such as .column on <code>Miso.Dataset</code> and <code>Miso.Dataview</code>
+            Miso.Dataset.Column objects make up the columns contained in a dataset and are returned by some methods such as .column on <code>Miso.Dataset</code> and <code>Miso.Dataset.DataView</code>
           </p>
-          <div class='entry' id='misocolumn_constructor'>
+          <div class='entry' id='misodatasetcolumn_constructor'>
             <div class='bar'>
               <h3>
-                new Miso.Column( options )
+                new Miso.Dataset.Column( options )
               </h3>
               <span class='returns'>
                 Returns:
                 <span class='object'>
-                  Miso.Column
+                  Miso.Dataset.Column
                 </span>
               </span>
             </div>
             <p>
               Returns a new column.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              var col = new Miso.Column({ 
+              var col = new Miso.Dataset.Column({ 
                 name: 'inoculated', 
                 type: 'boolean', 
                 data: [true, false, false, true] 
@@ -3440,7 +3542,7 @@
           <h3 class='instance'>
             Instance Methods
           </h3>
-          <div class='entry' id='misocolumn_i_numericat'>
+          <div class='entry' id='misodatasetcolumn_i_numericat'>
             <div class='bar'>
               <h3>
                 col.numericAt( index )
@@ -3456,7 +3558,7 @@
               Internal function used to return the numeric value of a given input in a column. Index is used
               as this is currently the return value for numeric coercion of string values.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              var col = new Miso.Column({ 
+              var col = new Miso.Dataset.Column({ 
                 name: 'inoculated', 
                 type: 'boolean', 
                 data: [true, false, false, true] 
@@ -3487,7 +3589,7 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misocolumn_i_coerce'>
+          <div class='entry' id='misodatasetcolumn_i_coerce'>
             <div class='bar'>
               <h3>
                 col.coerce()
@@ -3502,7 +3604,7 @@
             <p>
               Coerces all the data in the column's data array to the appropriate type.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              var col = new Miso.Column({ 
+              var col = new Miso.Dataset.Column({ 
                 name: 'amount', 
                 type: 'number', 
                 data: [2, 3, '4'] 
@@ -3514,9 +3616,9 @@
             </p>
           </div>
         </section>
-        <section class='api' id='misotypes'>
+        <section class='api' id='misodatasettypes'>
           <h2>
-            Miso.types
+            Miso.Dataset.types
           </h2>
           <p>
             Miso types are used to set and manage the data types on columns. These sets of
@@ -3528,7 +3630,7 @@
             // all types live under the Miso.types namespace.
             // Beware of overriding existing types. 
             // Nothing is stopping you from doing that.
-            Miso.types.yourCustomType = {
+            Miso.Dataset.types.yourCustomType = {
             
               // provide a name for your type.
               name : 'yourCustomTypeName',
@@ -3556,10 +3658,10 @@
               coerce : function(value) {}
             };</textarea></div>
           </p>
-          <div class='entry' id='misotypes_typeof'>
+          <div class='entry' id='misodatasettypes_typeof'>
             <div class='bar'>
               <h3>
-                Miso.typeOf( value, options )
+                Miso.Dataset.typeOf( value, options )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3572,9 +3674,9 @@
               Typeof tests the type of a given input against the registered Miso types and
               returns the closest match.
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              log(Miso.typeOf('foo'));
-              log(Miso.typeOf(true));
-              log(Miso.typeOf(4.3453));</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+              log(Miso.Dataset.typeOf('foo'));
+              log(Miso.Dataset.typeOf(true));
+              log(Miso.Dataset.typeOf(4.3453));</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
             </p>
             <h3>
               Parameters
@@ -3633,9 +3735,9 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misotypesmixed'>
+        <section class='api' id='misodatasettypesmixed'>
           <h2>
-            Miso.types.mixed
+            Miso.Dataset.types.mixed
           </h2>
           <p>
             Miso types are used to set and manage the data types on columns. These sets of
@@ -3643,10 +3745,10 @@
             for a given type. The type system is completely extensible, making it easy to create
             rich custom types for your data when it would be helpful to do so.
           </p>
-          <div class='entry' id='misotypesmixed_name'>
+          <div class='entry' id='misodatasettypesmixed_name'>
             <div class='bar'>
               <h3>
-                Miso.types.mixed.name()
+                Miso.Dataset.types.mixed.name()
               </h3>
               <span class='returns'>
                 Returns:
@@ -3659,10 +3761,10 @@
               Returns the name of the mixed type, ie <code>'mixed'</code>. Used internally.
             </p>
           </div>
-          <div class='entry' id='misotypesmixed_coerce'>
+          <div class='entry' id='misodatasettypesmixed_coerce'>
             <div class='bar'>
               <h3>
-                Miso.types.mixed.coerce( value )
+                Miso.Dataset.types.mixed.coerce( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3696,10 +3798,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesmixed_test'>
+          <div class='entry' id='misodatasettypesmixed_test'>
             <div class='bar'>
               <h3>
-                Miso.types.mixed.test( value )
+                Miso.Dataset.types.mixed.test( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3733,10 +3835,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesmixed_compare'>
+          <div class='entry' id='misodatasettypesmixed_compare'>
             <div class='bar'>
               <h3>
-                Miso.types.mixed.compare( value1, value2 )
+                Miso.Dataset.types.mixed.compare( value1, value2 )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3786,10 +3888,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesmixed_numeric'>
+          <div class='entry' id='misodatasettypesmixed_numeric'>
             <div class='bar'>
               <h3>
-                Miso.types.mixed.numeric( value )
+                Miso.Dataset.types.mixed.numeric( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3824,17 +3926,17 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misotypesstring'>
+        <section class='api' id='misodatasettypesstring'>
           <h2>
-            Miso.types.string
+            Miso.Dataset.types.string
           </h2>
           <p>
             The string type is used for columns of strings (shocking, I know).
           </p>
-          <div class='entry' id='misotypesstring_name'>
+          <div class='entry' id='misodatasettypesstring_name'>
             <div class='bar'>
               <h3>
-                Miso.types.string.name()
+                Miso.Dataset.types.string.name()
               </h3>
               <span class='returns'>
                 Returns:
@@ -3847,10 +3949,10 @@
               Returns the name of the string type, ie <code>'string'</code>. Used internally.
             </p>
           </div>
-          <div class='entry' id='misotypesstring_coerce'>
+          <div class='entry' id='misodatasettypesstring_coerce'>
             <div class='bar'>
               <h3>
-                Miso.types.string.coerce( value )
+                Miso.Dataset.types.string.coerce( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3884,10 +3986,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesstring_test'>
+          <div class='entry' id='misodatasettypesstring_test'>
             <div class='bar'>
               <h3>
-                Miso.types.string.test( value )
+                Miso.Dataset.types.string.test( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3921,10 +4023,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesstring_compare'>
+          <div class='entry' id='misodatasettypesstring_compare'>
             <div class='bar'>
               <h3>
-                Miso.types.string.compare( value1, value2 )
+                Miso.Dataset.types.string.compare( value1, value2 )
               </h3>
               <span class='returns'>
                 Returns:
@@ -3974,10 +4076,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesstring_numeric'>
+          <div class='entry' id='misodatasettypesstring_numeric'>
             <div class='bar'>
               <h3>
-                Miso.types.string.numeric( value, indexPosition )
+                Miso.Dataset.types.string.numeric( value, indexPosition )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4028,17 +4130,17 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misotypesnumber'>
+        <section class='api' id='misodatasettypesnumber'>
           <h2>
-            Miso.types.number
+            Miso.Dataset.types.number
           </h2>
           <p>
             The number type is used for columns of numbers.
           </p>
-          <div class='entry' id='misotypesnumber_name'>
+          <div class='entry' id='misodatasettypesnumber_name'>
             <div class='bar'>
               <h3>
-                Miso.types.number.name()
+                Miso.Dataset.types.number.name()
               </h3>
               <span class='returns'>
                 Returns:
@@ -4051,10 +4153,10 @@
               Returns the name of the number type, ie <code>'number'</code>. Used internally.
             </p>
           </div>
-          <div class='entry' id='misotypesnumber_coerce'>
+          <div class='entry' id='misodatasettypesnumber_coerce'>
             <div class='bar'>
               <h3>
-                Miso.types.number.coerce( value )
+                Miso.Dataset.types.number.coerce( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4088,10 +4190,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesnumber_test'>
+          <div class='entry' id='misodatasettypesnumber_test'>
             <div class='bar'>
               <h3>
-                Miso.types.number.test( value )
+                Miso.Dataset.types.number.test( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4125,10 +4227,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesnumber_compare'>
+          <div class='entry' id='misodatasettypesnumber_compare'>
             <div class='bar'>
               <h3>
-                Miso.types.number.compare( value1, value2 )
+                Miso.Dataset.types.number.compare( value1, value2 )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4178,10 +4280,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesnumber_numeric'>
+          <div class='entry' id='misodatasettypesnumber_numeric'>
             <div class='bar'>
               <h3>
-                Miso.types.number.numeric( value, indexPosition )
+                Miso.Dataset.types.number.numeric( value, indexPosition )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4216,17 +4318,17 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misotypesboolean'>
+        <section class='api' id='misodatasettypesboolean'>
           <h2>
-            Miso.types.boolean
+            Miso.Dataset.types.boolean
           </h2>
           <p>
             The boolean type is used for columns of true/false booleans.
           </p>
-          <div class='entry' id='misotypesboolean_name'>
+          <div class='entry' id='misodatasettypesboolean_name'>
             <div class='bar'>
               <h3>
-                Miso.types.boolean.name()
+                Miso.Dataset.types.boolean.name()
               </h3>
               <span class='returns'>
                 Returns:
@@ -4239,10 +4341,10 @@
               Returns the name of the boolean type, ie <code>'boolean'</code>. Used internally.
             </p>
           </div>
-          <div class='entry' id='misotypesboolean_coerce'>
+          <div class='entry' id='misodatasettypesboolean_coerce'>
             <div class='bar'>
               <h3>
-                Miso.types.boolean.coerce( value )
+                Miso.Dataset.types.boolean.coerce( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4276,10 +4378,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesboolean_test'>
+          <div class='entry' id='misodatasettypesboolean_test'>
             <div class='bar'>
               <h3>
-                Miso.types.boolean.test( value )
+                Miso.Dataset.types.boolean.test( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4313,10 +4415,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesboolean_compare'>
+          <div class='entry' id='misodatasettypesboolean_compare'>
             <div class='bar'>
               <h3>
-                Miso.types.boolean.compare( value1, value2 )
+                Miso.Dataset.types.boolean.compare( value1, value2 )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4366,10 +4468,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypesboolean_numeric'>
+          <div class='entry' id='misodatasettypesboolean_numeric'>
             <div class='bar'>
               <h3>
-                Miso.types.boolean.numeric( value, indexPosition )
+                Miso.Dataset.types.boolean.numeric( value, indexPosition )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4420,17 +4522,17 @@
             </ul>
           </div>
         </section>
-        <section class='api' id='misotypestime'>
+        <section class='api' id='misodatasettypestime'>
           <h2>
-            Miso.types.time
+            Miso.Dataset.types.time
           </h2>
           <p>
             The time type is used for columns of dates & timestamps, this uses %a{ :href => 'http://momentjs.com/'} moment.js internally and returns moment objects.
           </p>
-          <div class='entry' id='misotypestime_name'>
+          <div class='entry' id='misodatasettypestime_name'>
             <div class='bar'>
               <h3>
-                Miso.types.time.name()
+                Miso.Dataset.types.time.name()
               </h3>
               <span class='returns'>
                 Returns:
@@ -4443,10 +4545,10 @@
               Returns the name of the time type, ie <code>'time'</code>. Used internally.
             </p>
           </div>
-          <div class='entry' id='misotypestime_coerce'>
+          <div class='entry' id='misodatasettypestime_coerce'>
             <div class='bar'>
               <h3>
-                Miso.types.time.coerce( value, options )
+                Miso.Dataset.types.time.coerce( value, options )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4514,10 +4616,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypestime_test'>
+          <div class='entry' id='misodatasettypestime_test'>
             <div class='bar'>
               <h3>
-                Miso.types.time.test( value )
+                Miso.Dataset.types.time.test( value )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4551,10 +4653,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypestime_compare'>
+          <div class='entry' id='misodatasettypestime_compare'>
             <div class='bar'>
               <h3>
-                Miso.types.time.compare( value1, value2 )
+                Miso.Dataset.types.time.compare( value1, value2 )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4604,10 +4706,10 @@
               </li>
             </ul>
           </div>
-          <div class='entry' id='misotypestime_numeric'>
+          <div class='entry' id='misodatasettypestime_numeric'>
             <div class='bar'>
               <h3>
-                Miso.types.time.numeric( value, indexPosition )
+                Miso.Dataset.types.time.numeric( value, indexPosition )
               </h3>
               <span class='returns'>
                 Returns:
@@ -4673,6 +4775,11 @@
                   </a>
                 </li>
                 <li>
+                  <a href='#misodataset_i_addcomputedcolumn'>
+                    addComputedColumn
+                  </a>
+                </li>
+                <li>
                   <a href='#misodataset_i_add'>
                     add
                   </a>
@@ -4692,251 +4799,126 @@
                     reset
                   </a>
                 </li>
-                <li>
-                  <a href='#misodataview_i_columnnames'>
-                    columnNames
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_column'>
-                    column
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_columns'>
-                    columns
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_hascolumn'>
-                    hasColumn
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_eachcolumn'>
-                    eachColumn
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_each'>
-                    each
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_reverseeach'>
-                    reverseEach
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_rowbyposition'>
-                    rowByPosition
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_rowbyid'>
-                    rowById
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_rows'>
-                    rows
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_sort'>
-                    sort
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_where'>
-                    where
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_groupby'>
-                    groupBy
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_countby'>
-                    countBy
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_movingaverage'>
-                    movingAverage
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_min'>
-                    min
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_max'>
-                    max
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_sum'>
-                    sum
-                  </a>
-                </li>
-                <li>
-                  <a href='#misodataview_i_mean'>
-                    mean
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_bind'>
-                    bind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_unbind'>
-                    unbind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_trigger'>
-                    trigger
-                  </a>
-                </li>
               </ul>
             </li>
             <li>
-              <a href='#misodataview'>
-                Miso.Dataview
+              <a href='#misodatasetdataview'>
+                Miso.Dataset.DataView
               </a>
               <span class='instance'>
                 Instance Methods
               </span>
               <ul>
                 <li>
-                  <a href='#misodataview_i_columnnames'>
+                  <a href='#misodatasetdataview_i_columnnames'>
                     columnNames
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_column'>
+                  <a href='#misodatasetdataview_i_column'>
                     column
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_columns'>
+                  <a href='#misodatasetdataview_i_columns'>
                     columns
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_hascolumn'>
+                  <a href='#misodatasetdataview_i_hascolumn'>
                     hasColumn
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_eachcolumn'>
+                  <a href='#misodatasetdataview_i_eachcolumn'>
                     eachColumn
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_each'>
+                  <a href='#misodatasetdataview_i_each'>
                     each
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_reverseeach'>
+                  <a href='#misodatasetdataview_i_reverseeach'>
                     reverseEach
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_rowbyposition'>
+                  <a href='#misodatasetdataview_i_rowbyposition'>
                     rowByPosition
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_rowbyid'>
+                  <a href='#misodatasetdataview_i_rowbyid'>
                     rowById
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_rows'>
+                  <a href='#misodatasetdataview_i_rows'>
                     rows
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_sort'>
+                  <a href='#misodatasetdataview_i_sort'>
                     sort
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_where'>
+                  <a href='#misodatasetdataview_i_where'>
                     where
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_groupby'>
+                  <a href='#misodatasetdataview_i_groupby'>
                     groupBy
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_countby'>
+                  <a href='#misodatasetdataview_i_countby'>
                     countBy
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_movingaverage'>
+                  <a href='#misodatasetdataview_i_movingaverage'>
                     movingAverage
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_min'>
+                  <a href='#misodatasetdataview_i_min'>
                     min
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_max'>
+                  <a href='#misodatasetdataview_i_max'>
                     max
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_sum'>
+                  <a href='#misodatasetdataview_i_sum'>
                     sum
                   </a>
                 </li>
                 <li>
-                  <a href='#misodataview_i_mean'>
+                  <a href='#misodatasetdataview_i_mean'>
                     mean
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_bind'>
-                    bind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_unbind'>
-                    unbind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_trigger'>
-                    trigger
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoderived'>
-                Miso.Derived
+              <a href='#misodatasetderived'>
+                Miso.Dataset.Derived
               </a>
             </li>
             <li>
-              <a href='#misoproduct'>
-                Miso.Product
+              <a href='#misodatasetproduct'>
+                Miso.Dataset.Product
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoproduct_misoproductdefine'>
-                    Miso.Product.define
+                  <a href='#misodatasetproduct_misodatasetproductdefine'>
+                    Miso.Dataset.Product.define
                   </a>
                 </li>
               </ul>
@@ -4945,69 +4927,54 @@
               </span>
               <ul>
                 <li>
-                  <a href='#misoproduct_i_val'>
+                  <a href='#misodatasetproduct_i_val'>
                     val
                   </a>
                 </li>
-                <li>
-                  <a href='#misoevents_i_bind'>
-                    bind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_unbind'>
-                    unbind
-                  </a>
-                </li>
-                <li>
-                  <a href='#misoevents_i_trigger'>
-                    trigger
-                  </a>
-                </li>
               </ul>
             </li>
             <li>
-              <a href='#misoevents'>
-                Miso.Events
+              <a href='#misodatasetevents'>
+                Miso.Dataset.Events
               </a>
               <span class='instance'>
                 Instance Methods
               </span>
               <ul>
                 <li>
-                  <a href='#misoevents_i_bind'>
+                  <a href='#misodatasetevents_i_bind'>
                     bind
                   </a>
                 </li>
                 <li>
-                  <a href='#misoevents_i_unbind'>
+                  <a href='#misodatasetevents_i_unbind'>
                     unbind
                   </a>
                 </li>
                 <li>
-                  <a href='#misoevents_i_trigger'>
+                  <a href='#misodatasetevents_i_trigger'>
                     trigger
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoevent'>
-                Miso.Event
+              <a href='#misodatasetevent'>
+                Miso.Dataset.Event
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoevent_isremove'>
+                  <a href='#misodatasetevent_isremove'>
                     isRemove
                   </a>
                 </li>
                 <li>
-                  <a href='#misoevent_isadd'>
+                  <a href='#misodatasetevent_isadd'>
                     isAdd
                   </a>
                 </li>
                 <li>
-                  <a href='#misoevent_isupdate'>
+                  <a href='#misodatasetevent_isupdate'>
                     isUpdate
                   </a>
                 </li>
@@ -5017,77 +4984,77 @@
               </span>
               <ul>
                 <li>
-                  <a href='#misoevent_i_affectedcolumns'>
+                  <a href='#misodatasetevent_i_affectedcolumns'>
                     affectedColumns
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoimporters'>
-                Miso.Importers
+              <a href='#misodatasetimporters'>
+                Miso.Dataset.Importers
               </a>
             </li>
             <li>
-              <a href='#misoimporterlocal'>
-                Miso.Importer.Local
+              <a href='#misodatasetimporterslocal'>
+                Miso.Dataset.Importers...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoimporterlocal_constructor'>
+                  <a href='#misodatasetimporterslocal_constructor'>
                     constructor
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoimporterremote'>
-                Miso.Importer.Remote
+              <a href='#misodatasetimportersremote'>
+                Miso.Dataset.Importers...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoimporterremote_constructor'>
+                  <a href='#misodatasetimportersremote_constructor'>
                     constructor
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoimporterpolling'>
-                Miso.Importer.Polling
+              <a href='#misodatasetimporterspolling'>
+                Miso.Dataset.Importers...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoimporterpolling_constructor'>
+                  <a href='#misodatasetimporterspolling_constructor'>
                     constructor
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoimportergooglespreadsheet'>
-                Miso.Importer.GoogleSp...
+              <a href='#misodatasetimportersgooglespreadsheet'>
+                Miso.Dataset.Importers...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misoimportergooglespreadsheet_constructor'>
+                  <a href='#misodatasetimportersgooglespreadsheet_constructor'>
                     constructor
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misoparsers'>
-                Miso.Parsers
+              <a href='#misodatasetparsers'>
+                Miso.Dataset.Parsers
               </a>
             </li>
             <li>
-              <a href='#misocolumn'>
-                Miso.Column
+              <a href='#misodatasetcolumn'>
+                Miso.Dataset.Column
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misocolumn_constructor'>
+                  <a href='#misodatasetcolumn_constructor'>
                     constructor
                   </a>
                 </li>
@@ -5097,184 +5064,184 @@
               </span>
               <ul>
                 <li>
-                  <a href='#misocolumn_i_numericat'>
+                  <a href='#misodatasetcolumn_i_numericat'>
                     numericAt
                   </a>
                 </li>
                 <li>
-                  <a href='#misocolumn_i_coerce'>
+                  <a href='#misodatasetcolumn_i_coerce'>
                     coerce
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypes'>
-                Miso.types
+              <a href='#misodatasettypes'>
+                Miso.Dataset.types
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypes_typeof'>
+                  <a href='#misodatasettypes_typeof'>
                     typeof
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypesmixed'>
-                Miso.types.mixed
+              <a href='#misodatasettypesmixed'>
+                Miso.Dataset.types.mix...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypesmixed_name'>
+                  <a href='#misodatasettypesmixed_name'>
                     name
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesmixed_coerce'>
+                  <a href='#misodatasettypesmixed_coerce'>
                     coerce
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesmixed_test'>
+                  <a href='#misodatasettypesmixed_test'>
                     test
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesmixed_compare'>
+                  <a href='#misodatasettypesmixed_compare'>
                     compare
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesmixed_numeric'>
+                  <a href='#misodatasettypesmixed_numeric'>
                     numeric
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypesstring'>
-                Miso.types.string
+              <a href='#misodatasettypesstring'>
+                Miso.Dataset.types.str...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypesstring_name'>
+                  <a href='#misodatasettypesstring_name'>
                     name
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesstring_coerce'>
+                  <a href='#misodatasettypesstring_coerce'>
                     coerce
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesstring_test'>
+                  <a href='#misodatasettypesstring_test'>
                     test
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesstring_compare'>
+                  <a href='#misodatasettypesstring_compare'>
                     compare
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesstring_numeric'>
+                  <a href='#misodatasettypesstring_numeric'>
                     numeric
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypesnumber'>
-                Miso.types.number
+              <a href='#misodatasettypesnumber'>
+                Miso.Dataset.types.num...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypesnumber_name'>
+                  <a href='#misodatasettypesnumber_name'>
                     name
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesnumber_coerce'>
+                  <a href='#misodatasettypesnumber_coerce'>
                     coerce
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesnumber_test'>
+                  <a href='#misodatasettypesnumber_test'>
                     test
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesnumber_compare'>
+                  <a href='#misodatasettypesnumber_compare'>
                     compare
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesnumber_numeric'>
+                  <a href='#misodatasettypesnumber_numeric'>
                     numeric
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypesboolean'>
-                Miso.types.boolean
+              <a href='#misodatasettypesboolean'>
+                Miso.Dataset.types.boo...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypesboolean_name'>
+                  <a href='#misodatasettypesboolean_name'>
                     name
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesboolean_coerce'>
+                  <a href='#misodatasettypesboolean_coerce'>
                     coerce
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesboolean_test'>
+                  <a href='#misodatasettypesboolean_test'>
                     test
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesboolean_compare'>
+                  <a href='#misodatasettypesboolean_compare'>
                     compare
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypesboolean_numeric'>
+                  <a href='#misodatasettypesboolean_numeric'>
                     numeric
                   </a>
                 </li>
               </ul>
             </li>
             <li>
-              <a href='#misotypestime'>
-                Miso.types.time
+              <a href='#misodatasettypestime'>
+                Miso.Dataset.types.tim...
               </a>
               <ul class='object'>
                 <li>
-                  <a href='#misotypestime_name'>
+                  <a href='#misodatasettypestime_name'>
                     name
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypestime_coerce'>
+                  <a href='#misodatasettypestime_coerce'>
                     coerce
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypestime_test'>
+                  <a href='#misodatasettypestime_test'>
                     test
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypestime_compare'>
+                  <a href='#misodatasettypestime_compare'>
                     compare
                   </a>
                 </li>
                 <li>
-                  <a href='#misotypestime_numeric'>
+                  <a href='#misodatasettypestime_numeric'>
                     numeric
                   </a>
                 </li>
@@ -5316,7 +5283,7 @@
     </footer>
     <script src='/js/jquery.min.js'></script>
     <script src='/js/nav.js'></script>
-    <script src='/js/miso.ds.deps.0.1.3.js'></script>
+    <script src='/js/miso.ds.deps.0.3.0.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>

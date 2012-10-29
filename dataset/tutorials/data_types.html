@@ -66,15 +66,15 @@
           Data Columns & Types
         </h2>
         <p>
-          A Dataset is made up of Miso.Column objects, that each have a name, type and corresponding data. More about
-          the Miso.Column type can be found <a href="/dataset/api.html#misocolumn">in the API Docs</a>.
+          A Dataset is made up of Miso.Dataset.Column objects, that each have a name, type and corresponding data. More about
+          the Miso.Dataset.Column type can be found <a href="/dataset/api.html#misocolumn">in the API Docs</a>.
         </p>
         <p>
           By default, unless specified otherwise, Dataset will attempt to detect the column type itself by
           looking through the first few rows of the data and checking which type it fits under.
         </p>
         <div class='indent-1'>
-          Dataset has some prebuild Miso.types:
+          Dataset has some prebuild Miso.Dataset.types:
           <ul>
             <li><code>number</code></li>
             <li><code>string</code></li>
@@ -124,7 +124,7 @@
           // all types live under the Miso.types namespace.
           // Beware of overriding existing types. 
           // Nothing is stopping you from doing that.
-          Miso.types.yourCustomType = {
+          Miso.Dataset.types.yourCustomType = {
           
             // provide a name for your type.
             name : 'yourCustomTypeName',
@@ -170,7 +170,7 @@
           
           // Phone type. 
           // Converts a phone type to a phone type
-          Miso.types.phone = {  
+          Miso.Dataset.types.phone = {  
             name : "phone",
             // match phone numbers of the format:
             // XXX-XXX-XXXX or XXX XXX XXXX or XXXXXXXXXX
@@ -229,7 +229,7 @@
               log(this.column("phone").data[0].toString());
             }
           });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-          <script type='codemirror/cleanup' data-selector='customPhoneType'>delete Miso.types.phone;</script></div>
+          <script type='codemirror/cleanup' data-selector='customPhoneType'>delete Miso.Dataset.types.phone;</script></div>
         </p>
         <a href='/dataset/tutorials/livedata' style='float:left;'>
           <h2>
@@ -275,7 +275,7 @@
     </footer>
     <script src='/js/jquery.min.js'></script>
     <script src='/js/nav.js'></script>
-    <script src='/js/miso.ds.deps.0.1.3.js'></script>
+    <script src='/js/miso.ds.deps.0.3.0.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>

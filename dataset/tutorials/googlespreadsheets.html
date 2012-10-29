@@ -90,8 +90,8 @@
             In order to connect to a google spreadsheet the following properties need to be set on your
             Dataset options:
             <ul>
-              <li><code>importer</code> : <code>Miso.Importers.GoogleSpreadsheet</code></li>
-              <li><code>parser</code> :<code> Miso.Parsers.GoogleSpreadsheet</code></li>
+              <li><code>importer</code> : <code>Miso.Dataset.Importers.GoogleSpreadsheet</code></li>
+              <li><code>parser</code> :<code> Miso.Dataset.Parsers.GoogleSpreadsheet</code></li>
               <li><code>key</code> : <code>"yourGoogleSpreadsheetKey"</code></li>
               <li><code>worksheet</code> : <code>"1"</code> (optional - fetches 1 by default.)</li>
             </ul>
@@ -103,8 +103,8 @@
             </a>
             <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
             var ds = new Miso.Dataset({
-              importer : Miso.Importers.GoogleSpreadsheet,
-              parser : Miso.Parsers.GoogleSpreadsheet,
+              importer : Miso.Dataset.Importers.GoogleSpreadsheet,
+              parser : Miso.Dataset.Parsers.GoogleSpreadsheet,
               key : "0Asnl0xYK7V16dFpFVmZUUy1taXdFbUJGdGtVdFBXbFE",
               worksheet : "1"
             });
@@ -193,7 +193,7 @@
     </footer>
     <script src='/js/jquery.min.js'></script>
     <script src='/js/nav.js'></script>
-    <script src='/js/miso.ds.deps.0.1.3.js'></script>
+    <script src='/js/miso.ds.deps.0.3.0.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>
