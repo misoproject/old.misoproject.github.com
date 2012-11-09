@@ -10,14 +10,14 @@
     <![endif]-->
     <script src='http://use.typekit.com/aow5drr.js' type='text/javascript'></script>
     <script type='text/javascript'>
-      try{ Typekit.load(); } catch(e) { }
+      try{ Typekit.load(); } catch(e) {}
     </script>
     <meta charset='utf-8' />
     <meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
     <meta content='The Miso Project' name='description' />
     <meta content='The Miso Project' name='name' />
     <meta content='width=device-width' name='viewport' />
-    <title>The Miso Project</title>
+    <title>The Miso Project :: Storyboard :: Tutorials</title>
     <link href='/stylesheets/screen.css' rel='stylesheet' />
     <link href='/stylesheets/codemirror.css' rel='stylesheet' />
     
@@ -26,37 +26,63 @@
     <nav>
       <span class='miso'>
         <a href='/'>
-          Miso
-        </a>
-      </span>
-      <span>
-        <a href='/dataset'>
-          Dataset
+          &larr; Miso Home
         </a>
       </span>
       <span>
         <a href='/storyboard'>
-          Storyboard
+          Home
+        </a>
+      </span>
+      <span>
+        <a href='/storyboard/tutorials.html'>
+          Tutorials
+        </a>
+      </span>
+      <span>
+        <a href='/storyboard/api.html'>
+          API Doc
+        </a>
+      </span>
+      <span>
+        <a href='http://www.github.com/misoproject/storyboard'>
+          Code (Github)
         </a>
       </span>
     </nav>
-    <article class='miso'>
-      <section class='intro'>
-        <div class='left'>
-          <img src='/images/logo.png' />
-          <p>
-            Miso is an open source toolkit designed to expedite the creation of high-quality interactive storytelling and data visualisation content.
-          </p>
-          <p>
-            So far Miso consists of <a href="/dataset">Dataset</a>, a JavaScript client-side data management and transformation library &amp;
-            <a href="/storyboard">Storyboard</a>, a state and flow-control management library.
-          </p>
-          <p>
-            Miso is in active development, and will have components released as they are completed. Follow along:
-            <a href='http://www.twitter.com/themisoproject'>@TheMisoProject</a>
-            &amp;
-            <a href='http://www.github.com/misoproject'>Github</a>
-          </p>
+    <article class='dataset tutorials'>
+      <section>
+        <div class='tutorial'>
+          <a href='/storyboard/tutorials/quickstart'>
+            <h2>
+              Quick Start
+            </h2>
+            <p>
+              Start here to get your environment ready to go and create
+              your first storyboard!
+            </p>
+          </a>
+        </div>
+        <div class='tutorial'>
+          <a href='/storyboard/tutorials/async'>
+            <h2>
+              Asyncronous Scenes
+            </h2>
+            <p>
+              Learn how to work with asyncronous scenes in your storyboard.
+            </p>
+          </a>
+        </div>
+        <div class='tutorial'>
+          <a href='/storyboard/tutorials/remotedata'>
+            <h2>
+              Working with remote data
+            </h2>
+            <p>
+              How to use Storyboard to handle data loading with
+              Miso.Dataset.
+            </p>
+          </a>
         </div>
       </section>
     </article>
@@ -91,7 +117,8 @@
       </div>
     </footer>
     <script src='/js/jquery.min.js'></script>
-    <script src='/js/miso.ds.deps.0.3.0.js'></script>
+    <script src='/js/nav.js'></script>
+    <script src='/js/miso.storyboard.deps.js'></script>
     <script src='/js/bootstrap/transition.js'></script>
     <script src='/js/bootstrap/collapse.js'></script>
     <script src='/js/codemirror.js'></script>
