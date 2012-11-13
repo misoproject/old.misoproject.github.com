@@ -50,7 +50,95 @@
         </a>
       </span>
     </nav>
-    
+    <article class='dataset'>
+      <section class='intro'>
+        <div class='left'>
+          <img src='/images/block.png' />
+          <p>
+            Block is a small JavaScript library for wrapping visual components. It aims to simplify
+            wiring components together, constructing interactive visuals, extending visual components
+            and controlling complex styling.
+          </p>
+        </div>
+        <div class='download'>
+          <h2>
+            Download
+            <a href='https://github.com/misoproject/block/'>
+              0.0.1 alpha
+            </a>
+          </h2>
+          <a class='button' href='https://github.com/downloads/misoproject/block/miso.block.0.0.1.js' onclick="_gaq.push(['_trackEvent', 'Miso.Block', 'Downloads', 'Unminified, No Dependencies']);">
+            &darr; development
+          </a>
+          <a class='button' href='https://github.com/downloads/misoproject/block/miso.block.min.0.0.1.js' onclick="_gaq.push(['_trackEvent', 'Miso.Block', 'Downloads', 'Minified, No Dependencies']);">
+            &darr; production (minified)
+          </a>
+          <a class='button' href='https://github.com/downloads/misoproject/block/miso.block.deps.0.0.1.js' onclick="_gaq.push(['_trackEvent', 'Miso.Block', 'Downloads', 'Unminified, With Dependencies']);">
+            &darr; development with dependencies
+          </a>
+          <a class='button' href='https://github.com/downloads/misoproject/block/miso.block.deps.min.0.0.1.js' onclick="_gaq.push(['_trackEvent', 'Miso.Block', 'Downloads', 'Minified, With Dependencies']);">
+            &darr; production with dependencies (minified)
+          </a>
+        </div>
+      </section>
+      <section class='quickstart'>
+        <div class='left'>
+          <p>
+            When rendering visual components, we often want to do more than just attach user-driven behaviors to them.
+            They might have different states that they enter and exit, they might have custom functionality that should
+            or shouldn't be present and they might have styling that is more complex than CSS alone can help with.
+          </p>
+          <p>
+            Block.js is a tiny library that allows one to wrap visual components in a way that makes them easier to integrate
+            with other components, quick to extend and simper to maintain the different states of.
+          </p>
+          <p>
+            Follow along for releases &amp; announcements at <a href="http://www.twitter.com/themisoproject">@themisoproject</a>
+          </p>
+        </div>
+        <style type="text/css">
+          
+        </style>
+        <div id='demoblock' style='float: left; width: 34.5em;'></div>
+        <script type="text/javascript">
+          function makeOrangeBox() {
+            var box = $('<div>', { className : 'demoBox' }).css({
+              display : 'none',
+              width : '50px',
+              height : '50px',
+              float : 'left',
+              margin: 4,
+              backgroundColor : 'orange',
+              position : 'relative'
+            });
+            return box;
+          }
+        </script>
+        <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="false" callbacks-clear="" callbacks-reset="" callbacks-run="">
+        var Waffle = Miso.Block.extend({
+          
+          storyboard: new Miso.Storyboard({
+            initial : 'loading',
+            scenes : {
+              loading : {
+                enter : function() {
+                  console.log(this);
+                }
+              }
+            }
+          }),
+        
+          initialize : function(options) {
+            // how big is our chart?
+            this.gridSize = options.size || 5;
+          },
+        
+        })
+        
+        var w = new Waffle();
+        w.storyboard.start();</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
+      </section>
+    </article>
     <footer>
       <div class='container'>
         <section>
