@@ -881,7 +881,7 @@
           <div class='entry' id='d3chart_i_mixin'>
             <div class='bar'>
               <h3>
-                chart.mixin(selection, chartType)
+                chart.mixin(chartType,selection)
               </h3>
               <span class='returns'>
                 Returns:
@@ -900,8 +900,8 @@
               <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
               d3.chart("BarChartWithLabels", {
                 initialize: function() {
-                  this.bars   = this.mixin(this.base.append("g"), "BarChart");
-                  this.labels = this.mixin(this.base.append("g"), "LabelChart");
+                  this.bars   = this.mixin("BarChart", this.base.append("g"));
+                  this.labels = this.mixin("LabelChart", this.base.append("g"));
                 }
               });</textarea></div>
             </p>
@@ -909,22 +909,6 @@
               Parameters
             </h3>
             <ul class='parameters'>
-              <li>
-                <div class='head'>
-                  <span class='name'>
-                    selection
-                  </span>
-                  <span class='type'>
-                    d3 selection
-                  </span>
-                  <span class='required'>
-                    required
-                  </span>
-                </div>
-                <p>
-                  The d3 selection that will be used to create the new chart type.
-                </p>
-              </li>
               <li>
                 <div class='head'>
                   <span class='name'>
@@ -939,6 +923,22 @@
                 </div>
                 <p>
                   The name of the chart type that will be initilized.
+                </p>
+              </li>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    selection
+                  </span>
+                  <span class='type'>
+                    d3 selection
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  The d3 selection that will be used to create the new chart type.
                 </p>
               </li>
             </ul>
