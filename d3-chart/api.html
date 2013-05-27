@@ -1075,48 +1075,6 @@
             </ul>
           </div>
           <h3 class='instance'>
-            Instance Properties
-          </h3>
-          <div class='entry' id='d3layer_i_base'>
-            <div class='bar'>
-              <h3>
-                layer.base
-              </h3>
-              <span class='returns'>
-                Returns:
-                <span class='object'>
-                  d3 selection
-                </span>
-              </span>
-            </div>
-            <p>
-              The d3 selection onto which the layer was created.
-              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
-              var layer = d3.select(output)
-                .append("svg")
-                .attr("height", 100)
-                .attr("width", 100)
-                .append("g")
-                .attr("name", "theGroup")
-                .layer({
-                  dataBind: function(data) {
-                    return this.selectAll("text").data(data);
-                  },
-                  insert: function() {
-                    return this.append("text");
-                  },
-                  events: {
-                    enter: function() {
-                      console.log(this.base.attr("name"));
-                      this.text(this.base.attr("name"));
-                    }
-                  }
-                });
-              
-              layer.draw([10]);</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-            </p>
-          </div>
-          <h3 class='instance'>
             Instance Methods
           </h3>
           <div class='entry' id='d3layer_i_draw'>
@@ -1648,16 +1606,6 @@
                 <li>
                   <a href='#d3layer_constructor'>
                     constructor
-                  </a>
-                </li>
-              </ul>
-              <span class='instance'>
-                Instance Properties
-              </span>
-              <ul>
-                <li>
-                  <a href='#d3layer_i_base'>
-                    base
                   </a>
                 </li>
               </ul>
