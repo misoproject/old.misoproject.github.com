@@ -772,6 +772,19 @@
                   );
                 }
               });</textarea></div>
+              <br />
+              Additionally, <code>layer</code> can reattach a previously detached layer
+              using the format: <code>chart.layer(name, layer)</code>.
+              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              d3.chart("CircleChart", {
+                initialize: function() {
+                  // add a circles layer
+                  var circleLayer = this.unlayer("circles");
+              
+                  // reattach layer
+                  this.layer("circles", circleLayer);
+                }
+              });</textarea></div>
             </p>
             <h3>
               Parameters
@@ -806,7 +819,9 @@
                   </span>
                 </div>
                 <p>
-                  the d3 element into which the elements rendered by the layer will be placed
+                  the d3 element into which the elements rendered by the layer
+                  will be placed OR a previously detached layer that will be
+                  reattached.
                 </p>
               </li>
               <li>
@@ -880,6 +895,55 @@
                     </p>
                   </li>
                 </ul>
+              </li>
+            </ul>
+          </div>
+          <div class='entry' id='d3chart_i_unlayer'>
+            <div class='bar'>
+              <h3>
+                chart.unlayer(name)
+              </h3>
+              <span class='returns'>
+                Returns:
+                <span class='object'>
+                  d3.layer instance
+                </span>
+              </span>
+            </div>
+            <p>
+              Detaches an existing layer from the chart. Note that it does not actually
+              hide the layer (so it is up to you, the user, to hide the visual elements
+              appropriatly.)
+              <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+              d3.chart("CircleChart", {
+                initialize: function() {
+                  // add a circles layer
+                  var circleLayer = this.unlayer("circles");
+              
+                  // reattach layer
+                  this.layer("circles", circleLayer);
+                }
+              });</textarea></div>
+            </p>
+            <h3>
+              Parameters
+            </h3>
+            <ul class='parameters'>
+              <li>
+                <div class='head'>
+                  <span class='name'>
+                    name
+                  </span>
+                  <span class='type'>
+                    String
+                  </span>
+                  <span class='required'>
+                    required
+                  </span>
+                </div>
+                <p>
+                  Name of layer
+                </p>
               </li>
             </ul>
           </div>
@@ -1594,6 +1658,11 @@
                 <li>
                   <a href='#d3chart_i_layer'>
                     layer
+                  </a>
+                </li>
+                <li>
+                  <a href='#d3chart_i_unlayer'>
+                    unlayer
                   </a>
                 </li>
                 <li>
