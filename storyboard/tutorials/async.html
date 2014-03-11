@@ -52,10 +52,10 @@
     </nav>
     <article class='storyboard'>
   <section class='tutorial'>
-    <h2>Asyncronous Scenes</h2>
+    <h2>Asynchronous Scenes</h2>
     <p>
-      More often than not, a lot of your code will be asyncronous by nature. As you know
-      in JavaScript, this can mean your function actually exists before the asyncronous
+      More often than not, a lot of your code will be asynchronous by nature. As you know
+      in JavaScript, this can mean your function actually exists before the asynchronous
       code is done running! If you are trying to chain behavior, this can be a problem because
       things will get out of sync pretty fast.
     </p>
@@ -81,7 +81,7 @@ var story = new Miso.Storyboard({
     loading : {},
     a : {
       enter : function() {
-        // declare this function is asyncronous!
+        // declare this function is asynchronous!
         // Calling this.async returns a _function_
         // you should then call when you're done with all
         // your work.
