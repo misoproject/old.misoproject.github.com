@@ -87,8 +87,7 @@
   <p>
     Create a new chart constructor or return a previously-created chart
 constructor.
-<div style='height:150px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     log("Hi! I'm a chart");
@@ -97,7 +96,6 @@ d3.chart("CircleChart", {
 
 var chart = d3.select(output)
   .chart("CircleChart");</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -171,8 +169,7 @@ var chart = d3.select(output)
 inheritance so that new chart constructors may be defined in terms of
 existing chart constructors. Based on the `extend` function defined by
 Backbone.js
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     log("Hi! I'm a chart");
@@ -187,7 +184,6 @@ d3.chart("CircleChart").extend("OtherCircleChart", {
 
 var chart = d3.select(output)
   .chart("OtherCircleChart");</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -262,8 +258,7 @@ d3.chart reserves the following properties:
   </div>
   <p>
     The d3.selection in which the Chart instance is contained.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode="" globals="d3" runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     log("The base name attribute is set to: " + this.base.attr("name"));
@@ -274,7 +269,6 @@ var chart = d3.select(output)
   .append("p")
   .attr("name", "LeParagraph")
   .chart("CircleChart");</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
   <h3 class='instance'>
@@ -482,8 +476,7 @@ chart.action();</textarea><div class="helptext">You can edit the code in this bl
     Subscribe a handler to a "lifecycle event". These events (and only these
 events) are triggered when <code>Layer#draw</code> is invoked &mdash; see
 that method for more details on lifecycle events.
-<div style='height:300px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
 
@@ -501,7 +494,6 @@ chart.on("acted", function(message){
 });
 
 chart.action();</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -575,8 +567,7 @@ chart.action();</textarea><div class="helptext">You can edit the code in this bl
 function will be invoked at the next occurance of the event and immediately
 unsubscribed. See <code>Chart.on</code> to subscribe a callback function
 to an event indefinitely.
-<div style='height:350px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
 
@@ -597,7 +588,6 @@ chart.once("acted", function(message){
 // though we will trigger twice
 chart.action();
 chart.action();</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -675,8 +665,7 @@ callback</code> are specified, only that function will be unsubscribed
 from that event. When a <code>name</code> and <code>context</code> are
 specified (but <code>callback</code> is omitted), all events bound to the
 given event with the given context will be unsubscribed.
-<div style='height: 400px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
 
@@ -701,7 +690,6 @@ chart.off();
 // won't trigger
 chart.action();
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -779,8 +767,7 @@ If a `name` and `selection` are provided, treat the `selection` as a
 previously-created layer and attach it to the chart with the specified
 `name`.
 <br>
-<div style='height:150px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     // add a circles layer
@@ -790,7 +777,6 @@ d3.chart("CircleChart", {
     this.layer("circles", circleLayer);
   }
 });</textarea></div>
-</div>
 <br>
 If all three arguments are specified, initialize a new layer using
 the specified `selection` as a base passing along the specified `options`.
@@ -799,8 +785,7 @@ The layer.draw method of attached layers will be invoked
 whenever this chart's `draw` is invoked and will receive the
 data (optionally modified by the chart's transform method.
 <br>
-<div style='height:400px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     // add a circles layer
@@ -835,7 +820,6 @@ d3.chart("CircleChart", {
     );
   }
 });</textarea></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1011,8 +995,7 @@ d3.chart("CircleChart", {
     Register or retrieve an "attachment" Chart. The "attachment" chart's `draw`
 method will be invoked whenever the containing chart's `draw` method is
 invoked.
-<div style='height:220px;'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("PieBars", {
   initialize: function() {
     var barchart = this.base.append("svg")
@@ -1026,7 +1009,6 @@ d3.chart("PieBars", {
     this.attach("piechart", piechart);
   }
 });</textarea></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1098,8 +1080,7 @@ these bound methods.
     Defines a new layer on a selection or returns a reference to the selection
 corresponding to a layer by a specific name. Most of the time will be called on
 a chart, but can be called directly on a layer.
-<div style='height:300px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 // define a layer
 var layer = d3.select(output)
   .append("svg")
@@ -1125,7 +1106,6 @@ var layer = d3.select(output)
 
 // render the layer  
 layer.draw([10,20,50,90]);</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1290,8 +1270,7 @@ layer.draw([10,20,50,90]);</textarea><div class="helptext">You can edit the code
 inside of the <code>dataBind</code>, <code>insert</code> and any lifecycle event callback
 methods where the default context is set to the layer or lifecycle selection
 (on which you can call this chart method.) See example for more details.
-<div style='height:400px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 d3.chart("CircleChart", {
   initialize: function() {
     // add a circles layer
@@ -1337,7 +1316,6 @@ var chart = d3.select(output)
   .chart("CircleChart");
 
 chart.draw([10,15,24,53,90]);</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 <div class='entry' id='d3layer_i_on'>

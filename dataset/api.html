@@ -86,8 +86,7 @@ available on the dataset.
   </div>
   <p>
     Returns a new dataset. See the creating datasets guide for detailed information.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 } 
@@ -101,7 +100,6 @@ var ds2 = new Miso.Dataset({
 log( ds instanceof Miso.Dataset );
 log( ds2 instanceof Miso.Dataset );
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -437,8 +435,7 @@ guide for more information.
 this needs to be called before data can be accessed. Fetch returns a
 <a href='https://github.com/wookiehangover/underscore.Deferred'>deferred</a>
 which makes it simple to chain operations off async data requests.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -450,7 +447,6 @@ var ds = new Miso.Dataset({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -522,8 +518,7 @@ var ds = new Miso.Dataset({
   </div>
   <p>
     Creates a new column and adds it to the dataset.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 } 
@@ -539,7 +534,6 @@ ds.fetch({
     log(this.columnNames());
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -729,8 +723,7 @@ ds.fetch({
   <p>
     Adds a row to the dataset. This will fire <code>add</code> and <code>change</code>
 events on a syncable dataset.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 } 
@@ -743,7 +736,6 @@ ds.fetch({
     log( this.column('three').data );
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -816,8 +808,7 @@ ds.fetch({
   <p>
     Removes rows matching the passed filter from the dataset. This will fire <code>remove</code>
 and <code>change</code> events on a syncable dataset.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -835,7 +826,6 @@ ds.fetch({
     log(this.column('two').data);
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -911,8 +901,7 @@ an array of objects of the same form or a function that will be first applied to
 The function should take a `row` object for each row in the dataset. If a row shouldn't be modified, the function
 can return false for that row.
 This will fire <code>update</code> and <code>change</code> events on a syncable dataset.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -944,7 +933,6 @@ ds.fetch({
     log(this.column('two').data);
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1032,8 +1020,7 @@ ds.fetch({
   </div>
   <p>
     Updates one or more rows in a dataset. This will fire <code>update</code> and <code>change</code> events on a syncable dataset.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1048,7 +1035,6 @@ ds.fetch({
     log( this.column('two').data );
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 </section>
@@ -1077,8 +1063,7 @@ A <code>Miso.Dataset</code> also extends from <code>Miso.DataView</code>. All th
   </div>
   <p>
     Returns an array containing the names of all columns
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1092,7 +1077,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 <div class='entry' id='misodatasetdataview_i_column'>
@@ -1109,8 +1093,7 @@ ds.fetch({
   </div>
   <p>
     Returns a reference to a column object
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1124,7 +1107,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1162,8 +1144,7 @@ ds.fetch({
   </div>
   <p>
     Shorthand for ds.where({ columns : nameArray });
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1179,7 +1160,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1217,8 +1197,7 @@ ds.fetch({
   </div>
   <p>
     Checks for the existance of a column and returns true/false
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1231,7 +1210,6 @@ ds.fetch({
     log(this.hasColumn('otter'));    
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1270,8 +1248,7 @@ ds.fetch({
   <p>
     Iterate over all columns. Direct column references, not arrays so modifying
 data may cause internal inconsistencies.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1286,7 +1263,6 @@ ds.fetch({
     });
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1341,8 +1317,7 @@ ds.fetch({
   <p>
     Iterate over all rows. Each row is not a direct reference to the data
 and thus should not be altered in any way.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data : [
     { one : 12,  two : 40},
@@ -1357,7 +1332,6 @@ ds.fetch({
     });
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1412,8 +1386,7 @@ ds.fetch({
   <p>
     Iterate over all rows in reverse. Each row is not a direct reference to the data
 and thus should not be altered in any way.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data : [
     { one : 12,  two : 4},
@@ -1428,7 +1401,6 @@ ds.fetch({
     });
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1482,8 +1454,7 @@ ds.fetch({
   </div>
   <p>
     Fetches a row object at a specified position. Note that the returned row object is NOT a direct reference to the data and thus any changes to it will not alter the original data.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1495,7 +1466,6 @@ ds.fetch({
     log(ds.rowByPosition(1));  
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1533,8 +1503,7 @@ ds.fetch({
   </div>
   <p>
     Fetches a row object with a specific <code>_id</code>. Note that the returned row object is NOT a direct reference to the data and thus any changes to it will not alter the original data.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1550,7 +1519,6 @@ ds.fetch({
 });
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1590,8 +1558,7 @@ ds.fetch({
     Shorthand for
 <a href='#misodataview_i_where'>ds.where({ rows : rowFilter });</a>
 If run with no filter will return all rows.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1610,7 +1577,6 @@ ds.fetch({
     log(rowTwo.length);
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1650,8 +1616,7 @@ ds.fetch({
     Sorts the dataset according to the comparator. A comparator can either be passed
 in as part of the options object or have been defined on the dataset already, for
 example as part of the initialization block.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1675,7 +1640,6 @@ ds.fetch({ success: function() {
 
   log("After Sort", this.toJSON());
 }});</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1752,8 +1716,7 @@ ds.fetch({ success: function() {
 Filtration can be applied to both rows & columns and for syncing datasets changes
 in the parent dataset from which the dataview was created will be reflected in the
 dataview.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1776,7 +1739,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1849,8 +1811,7 @@ ds.fetch({
   </div>
   <p>
     Groups rows by the values in a given column
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1864,7 +1825,6 @@ ds.fetch({
     log(this.groupBy('one', ['two']));
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -1970,8 +1930,7 @@ The function signature is <code>function(arr)</code>. It should return a single 
   </div>
   <p>
     Returns a new derived dataset that contains the original byColumn and a count column that returns the number of occurances each unique value in the byColumn contained.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -1985,7 +1944,6 @@ ds.fetch({
     log(this.countBy('one').toJSON());
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2128,8 +2086,7 @@ ds.fetch({
     If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
 be used to bind events to and access the current value. Otherwise it will return the current
 value - the lowest numeric value in that column
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2145,7 +2102,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2185,8 +2141,7 @@ ds.fetch({
     If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
 be used to bind events to and access the current value. Otherwise it will return the current
 value - the highest numeric value in that column
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2202,7 +2157,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2242,8 +2196,7 @@ ds.fetch({
     If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
 be used to bind events to and access the current value. Otherwise it will return the current
 value - the sum of the numeric form of the values in the column.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2260,7 +2213,6 @@ ds.fetch({
 });
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2300,8 +2252,7 @@ ds.fetch({
     If the dataset has <code>sync</code> enabled this will return a <code>Miso.Dataset.Product</code> that can
 be used to bind events to and access the current value. Otherwise it will return the current
 value - the mean or average of the numeric form of the values in the column.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2319,7 +2270,6 @@ ds.fetch({
 
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2379,8 +2329,7 @@ the product.
   </div>
   <p>
     Use this method to define a new product. For example:
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 // initialize a new dataset
 var ds = new Miso.Dataset({
   data: { 
@@ -2415,7 +2364,6 @@ ds.fetch({
     log(this.random(["one", "two"]));    
   }
 });</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2456,8 +2404,7 @@ ds.fetch({
   </div>
   <p>
     Returns the current value of the product.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2481,7 +2428,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 </section>
@@ -2773,8 +2719,7 @@ ds.fetch({
   </div>
   <p>
     Returns whether or not a given delta is for a remove event
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2797,7 +2742,6 @@ ds.add({ one: 3 });
 //true
 ds.remove(function(row) { return true; });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2835,8 +2779,7 @@ ds.remove(function(row) { return true; });
   </div>
   <p>
     Returns whether or not a given delta is for an add event
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2860,7 +2803,6 @@ ds.add({ one: 3 });
 ds.remove(function(row) { return true; });
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2898,8 +2840,7 @@ ds.remove(function(row) { return true; });
   </div>
   <p>
     Returns whether or not a given delta is for an update event
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2924,7 +2865,6 @@ var firstRowID = ds.column('_id').data[0];
 ds.update(firstRowID, { one: 9 });
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -2965,8 +2905,7 @@ ds.update(firstRowID, { one: 9 });
   </div>
   <p>
     Returns an array of columns affected by the event
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -2985,7 +2924,6 @@ ds.fetch({
 
 ds.add({ one: 3, two: 9 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 </section>
@@ -3008,8 +2946,7 @@ ds.add({ one: 3, two: 9 });
 </p>
 <p>
   An importer must implement the following interface:
-  <div style='height:200px'>
-    <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""   showConsole="false" buttons="none" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 Miso.Dataset.Importers.MyCustomImporter = function(options) {
   // save your options
   // overwrite 'extract' function if you want
@@ -3037,7 +2974,6 @@ _.extend(
     }
   }
 );</textarea></div>
-  </div>
 </p>
   </p>
 </section>
@@ -3047,8 +2983,7 @@ _.extend(
   </h2>
   <p>
     Import local data already in the environment
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   data: [ 
     { one : 1, two : 4, three : 7 },
@@ -3063,7 +2998,6 @@ ds.fetch({
 });
 
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <div class='entry' id='misodatasetimporterslocal_constructor'>
     <div class='bar'>
@@ -3127,8 +3061,7 @@ ds.fetch({
   </h2>
   <p>
     Import data from remote files via an AJAX request
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var ds = new Miso.Dataset({
   url: '/data/simple.json'
 });
@@ -3139,7 +3072,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <div class='entry' id='misodatasetimportersremote_constructor'>
     <div class='bar'>
@@ -3219,8 +3151,7 @@ ds.fetch({
   </h2>
   <p>
     Pull data from a remote source on a regular interval
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var requests = 5, 
     madeRequests = 0;
 
@@ -3255,7 +3186,6 @@ ds.fetch({
   }
 });
 </textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <div class='entry' id='misodatasetimporterspolling_constructor'>
     <div class='bar'>
@@ -3533,8 +3463,7 @@ _.extend(
   </div>
   <p>
     Returns a new column.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var col = new Miso.Dataset.Column({ 
   name: 'inoculated', 
   type: 'boolean', 
@@ -3542,7 +3471,6 @@ var col = new Miso.Dataset.Column({
 });
 
 log(col.data);</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -3682,8 +3610,7 @@ log(col.data);</textarea><div class="helptext">You can edit the code in this blo
   <p>
     Internal function used to return the numeric value of a given input in a column. Index is used
 as this is currently the return value for numeric coercion of string values.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var col = new Miso.Dataset.Column({ 
   name: 'inoculated', 
   type: 'boolean', 
@@ -3692,7 +3619,6 @@ var col = new Miso.Dataset.Column({
 
 log (col.numericAt(0));
 log (col.numericAt(1));</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
@@ -3730,8 +3656,7 @@ log (col.numericAt(1));</textarea><div class="helptext">You can edit the code in
   </div>
   <p>
     Coerces all the data in the column's data array to the appropriate type.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 var col = new Miso.Dataset.Column({ 
   name: 'amount', 
   type: 'number', 
@@ -3741,7 +3666,6 @@ var col = new Miso.Dataset.Column({
 log (col.data);
 col.coerce();
 log (col.data);</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
 </div>
 </section>
@@ -3802,12 +3726,10 @@ Miso.Dataset.types.yourCustomType = {
   <p>
     Typeof tests the type of a given input against the registered Miso types and
 returns the closest match.
-<div style='height:200px'>
-  <div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
+<div class="codeblock"><textarea name="codehelper"  class="code" mode=""  runnable="true" showConsole="true" buttons="run,reset,clear" autorun="" callbacks-clear="" callbacks-reset="" callbacks-run="">
 log(Miso.Dataset.typeOf('foo'));
 log(Miso.Dataset.typeOf(true));
 log(Miso.Dataset.typeOf(4.3453));</textarea><div class="helptext">You can edit the code in this block and rerun it.</div></div>
-</div>
   </p>
   <h3>
     Parameters
